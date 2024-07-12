@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		501D5DED2C40C18000F1E177 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 501D5DEC2C40C18000F1E177 /* InfoPlist.xcstrings */; };
+		5060B2FF2C412E730076A4EE /* FLEX in Frameworks */ = {isa = PBXBuildFile; productRef = 5060B2FE2C412E730076A4EE /* FLEX */; };
 		50D0C8B82C40187800538F49 /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 50D0C8B72C40187800538F49 /* Vapor */; };
 		50D0C8BA2C401AD600538F49 /* Installer+TLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0C8B92C401AD600538F49 /* Installer+TLS.swift */; };
 		50D0C8BC2C401B3000538F49 /* Installer+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0C8BB2C401B3000538F49 /* Installer+App.swift */; };
@@ -81,6 +82,7 @@
 				50D44D3F2C3FA59500CF6A69 /* Kingfisher in Frameworks */,
 				50E28B812C40BA52007891E0 /* ColorfulX in Frameworks */,
 				50D44D482C3FAE8000CF6A69 /* Tiercel in Frameworks */,
+				5060B2FF2C412E730076A4EE /* FLEX in Frameworks */,
 				50D44D232C3F92C500CF6A69 /* NIOSSL in Frameworks */,
 				50D0C8B82C40187800538F49 /* Vapor in Frameworks */,
 				50D44D1E2C3F92BB00CF6A69 /* NIOHTTP1 in Frameworks */,
@@ -225,6 +227,7 @@
 				50D44D502C3FC85F00CF6A69 /* AnyCodable */,
 				50D0C8B72C40187800538F49 /* Vapor */,
 				50E28B802C40BA52007891E0 /* ColorfulX */,
+				5060B2FE2C412E730076A4EE /* FLEX */,
 			);
 			productName = Asspp;
 			productReference = 50D44D022C3F91F700CF6A69 /* Asspp.app */;
@@ -263,6 +266,7 @@
 				50D44D4F2C3FC85F00CF6A69 /* XCRemoteSwiftPackageReference "AnyCodable" */,
 				50D0C8B62C40187800538F49 /* XCRemoteSwiftPackageReference "vapor" */,
 				50E28B7F2C40BA52007891E0 /* XCRemoteSwiftPackageReference "ColorfulX" */,
+				5060B2FD2C412E730076A4EE /* XCRemoteSwiftPackageReference "FLEX" */,
 			);
 			productRefGroup = 50D44D032C3F91F700CF6A69 /* Products */;
 			projectDirPath = "";
@@ -522,6 +526,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5060B2FD2C412E730076A4EE /* XCRemoteSwiftPackageReference "FLEX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/FLEXTool/FLEX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.22.10;
+			};
+		};
 		50D0C8B62C40187800538F49 /* XCRemoteSwiftPackageReference "vapor" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vapor/vapor";
@@ -581,6 +593,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5060B2FE2C412E730076A4EE /* FLEX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5060B2FD2C412E730076A4EE /* XCRemoteSwiftPackageReference "FLEX" */;
+			productName = FLEX;
+		};
 		50D0C8B72C40187800538F49 /* Vapor */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 50D0C8B62C40187800538F49 /* XCRemoteSwiftPackageReference "vapor" */;

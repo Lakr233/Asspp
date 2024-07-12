@@ -27,6 +27,34 @@ You need to figure it out by yourself :) But here are some tech notes:
 
 - [x] https://dantheman827.github.io/ios-app-signer/
 
+**If you encounter issues like [#1](https://github.com/Lakr233/Asspp/issues/1), please use the provided signing tool for installation.**
+
+### Local Installation
+
+**Advantages:**
+
+- Usable on a single device
+- Cannot be detected by the App Store
+- Cannot auto-update
+
+**Disadvantages:**
+
+- Cannot be detected by the App Store 🤡
+- Cannot auto-update 🤡
+- Requires internet connection
+
+### Using AirDrop for Installation
+
+**Advantages:**
+
+- Compatible with the App Store
+- Can auto-update normally
+
+**Disadvantages:**
+
+- Requires two devices
+- The target device needs to be logged into the corresponding account and have at least one app installed with that account
+
 ## 🚀 Usage
 
 Download the latest version from [Releases](https://github.com/Lakr233/Asspp/releases).

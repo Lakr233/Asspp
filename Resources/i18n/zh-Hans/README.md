@@ -25,6 +25,34 @@
 
 - [x] https://dantheman827.github.io/ios-app-signer/
 
+**如果你遇到了诸如 [#1](https://github.com/Lakr233/Asspp/issues/1) 之类的问题，请使用上面提供的签名工具进行安装。**
+
+### 本地安装
+
+**优点**
+
+- 单设备可用
+- 无法被 App Store 检测
+- 不可自动更新
+
+**缺点**
+
+- 无法被 App Store 检测 🤡
+- 不可自动更新 🤡
+- 需要联网
+
+### 使用 AirDrop 安装
+
+**优点**
+
+- 与 App Store 兼容
+- 可以正常自动升级
+
+**缺点**
+
+- 需要两台设备
+- 目标设备需要登录过对应账户并且该账户至少安装有一个应用
+
 ## 🚀 使用方法
 
 从 [Releases](https://github.com/Lakr233/Asspp/releases) 下载最新版本。
