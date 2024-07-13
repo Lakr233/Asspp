@@ -5,6 +5,9 @@
       location = "group:Asspp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ApplePackage">
+      location = "group:Foundation/ApplePackage">
+   </FileRef>
+   <FileRef
+      location = "group:Foundation/Digger">
    </FileRef>
 </Workspace>

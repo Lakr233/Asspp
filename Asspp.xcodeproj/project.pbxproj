@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		501D5DED2C40C18000F1E177 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 501D5DEC2C40C18000F1E177 /* InfoPlist.xcstrings */; };
 		5060B2FF2C412E730076A4EE /* FLEX in Frameworks */ = {isa = PBXBuildFile; productRef = 5060B2FE2C412E730076A4EE /* FLEX */; };
+		506367A32C42382900634EEA /* Digger in Frameworks */ = {isa = PBXBuildFile; productRef = 506367A22C42382900634EEA /* Digger */; };
+		506367A72C423CE900634EEA /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506367A62C423CE900634EEA /* MD5.swift */; };
+		506367A92C423D2700634EEA /* Downloads+Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506367A82C423D2700634EEA /* Downloads+Report.swift */; };
+		506367AB2C423D4C00634EEA /* Downloads+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506367AA2C423D4C00634EEA /* Downloads+Request.swift */; };
+		5095BD282C4233E7000EA1F6 /* AddDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095BD272C4233E7000EA1F6 /* AddDownloadView.swift */; };
+		5095BD2A2C423442000EA1F6 /* SimpleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095BD292C423442000EA1F6 /* SimpleProgress.swift */; };
 		50D0C8B82C40187800538F49 /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 50D0C8B72C40187800538F49 /* Vapor */; };
 		50D0C8BA2C401AD600538F49 /* Installer+TLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0C8B92C401AD600538F49 /* Installer+TLS.swift */; };
 		50D0C8BC2C401B3000538F49 /* Installer+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0C8BB2C401B3000538F49 /* Installer+App.swift */; };
@@ -34,9 +40,8 @@
 		50D44D3C2C3FA34400CF6A69 /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D3B2C3FA34400CF6A69 /* AccountDetailView.swift */; };
 		50D44D3F2C3FA59500CF6A69 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 50D44D3E2C3FA59500CF6A69 /* Kingfisher */; };
 		50D44D412C3FA6CC00CF6A69 /* ArchivePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D402C3FA6CC00CF6A69 /* ArchivePreviewView.swift */; };
-		50D44D432C3FA6DC00CF6A69 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D422C3FA6DC00CF6A69 /* StoreView.swift */; };
-		50D44D452C3FAC4900CF6A69 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D442C3FAC4900CF6A69 /* DownloadManager.swift */; };
-		50D44D482C3FAE8000CF6A69 /* Tiercel in Frameworks */ = {isa = PBXBuildFile; productRef = 50D44D472C3FAE8000CF6A69 /* Tiercel */; };
+		50D44D432C3FA6DC00CF6A69 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D422C3FA6DC00CF6A69 /* ProductView.swift */; };
+		50D44D452C3FAC4900CF6A69 /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D442C3FAC4900CF6A69 /* Downloads.swift */; };
 		50D44D4A2C3FB97A00CF6A69 /* PackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D492C3FB97A00CF6A69 /* PackageView.swift */; };
 		50D44D4E2C3FC0DD00CF6A69 /* InstallerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D44D4D2C3FC0DD00CF6A69 /* InstallerView.swift */; };
 		50D44D512C3FC85F00CF6A69 /* AnyCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 50D44D502C3FC85F00CF6A69 /* AnyCodable */; };
@@ -47,6 +52,11 @@
 
 /* Begin PBXFileReference section */
 		501D5DEC2C40C18000F1E177 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		506367A62C423CE900634EEA /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
+		506367A82C423D2700634EEA /* Downloads+Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Downloads+Report.swift"; sourceTree = "<group>"; };
+		506367AA2C423D4C00634EEA /* Downloads+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Downloads+Request.swift"; sourceTree = "<group>"; };
+		5095BD272C4233E7000EA1F6 /* AddDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDownloadView.swift; sourceTree = "<group>"; };
+		5095BD292C423442000EA1F6 /* SimpleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProgress.swift; sourceTree = "<group>"; };
 		50D0C8B92C401AD600538F49 /* Installer+TLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Installer+TLS.swift"; sourceTree = "<group>"; };
 		50D0C8BB2C401B3000538F49 /* Installer+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Installer+App.swift"; sourceTree = "<group>"; };
 		50D0C8BD2C401B7B00538F49 /* Installer+Pic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Installer+Pic.swift"; sourceTree = "<group>"; };
@@ -66,8 +76,8 @@
 		50D44D392C3F9F6A00CF6A69 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
 		50D44D3B2C3FA34400CF6A69 /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		50D44D402C3FA6CC00CF6A69 /* ArchivePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePreviewView.swift; sourceTree = "<group>"; };
-		50D44D422C3FA6DC00CF6A69 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
-		50D44D442C3FAC4900CF6A69 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		50D44D422C3FA6DC00CF6A69 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
+		50D44D442C3FAC4900CF6A69 /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
 		50D44D492C3FB97A00CF6A69 /* PackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageView.swift; sourceTree = "<group>"; };
 		50D44D4D2C3FC0DD00CF6A69 /* InstallerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerView.swift; sourceTree = "<group>"; };
 		50E28B822C40BCB3007891E0 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -81,13 +91,13 @@
 			files = (
 				50D44D3F2C3FA59500CF6A69 /* Kingfisher in Frameworks */,
 				50E28B812C40BA52007891E0 /* ColorfulX in Frameworks */,
-				50D44D482C3FAE8000CF6A69 /* Tiercel in Frameworks */,
 				5060B2FF2C412E730076A4EE /* FLEX in Frameworks */,
 				50D44D232C3F92C500CF6A69 /* NIOSSL in Frameworks */,
 				50D0C8B82C40187800538F49 /* Vapor in Frameworks */,
 				50D44D1E2C3F92BB00CF6A69 /* NIOHTTP1 in Frameworks */,
 				50D44D512C3FC85F00CF6A69 /* AnyCodable in Frameworks */,
 				50D44D192C3F92A100CF6A69 /* ApplePackage in Frameworks */,
+				506367A32C42382900634EEA /* Digger in Frameworks */,
 				50D44D1C2C3F92BB00CF6A69 /* NIO in Frameworks */,
 				50D44D202C3F92BB00CF6A69 /* NIOTLS in Frameworks */,
 			);
@@ -96,6 +106,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5095BD242C422B00000EA1F6 /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				50D44D312C3F9F3500CF6A69 /* AppStore.swift */,
+				50D44D442C3FAC4900CF6A69 /* Downloads.swift */,
+				506367AA2C423D4C00634EEA /* Downloads+Request.swift */,
+				506367A82C423D2700634EEA /* Downloads+Report.swift */,
+				506367A62C423CE900634EEA /* MD5.swift */,
+				50D0C8C12C40253800538F49 /* Installer.swift */,
+				50D0C8BF2C401DE000538F49 /* Installer+Compute.swift */,
+				50D0C8BD2C401B7B00538F49 /* Installer+Pic.swift */,
+				50D0C8BB2C401B3000538F49 /* Installer+App.swift */,
+				50D0C8B92C401AD600538F49 /* Installer+TLS.swift */,
+			);
+			path = Backend;
+			sourceTree = "<group>";
+		};
+		5095BD252C422B15000EA1F6 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				50D44D342C3F9F4800CF6A69 /* Welcome */,
+				50D44D332C3F9F4200CF6A69 /* Account */,
+				50D44D352C3F9F5300CF6A69 /* Search */,
+				50D44D362C3F9F5600CF6A69 /* Download */,
+				50D44D372C3F9F5900CF6A69 /* Setting */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		5095BD262C422B1B000EA1F6 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				50D44D152C3F927D00CF6A69 /* main.swift */,
+				50D44D092C3F91F800CF6A69 /* Assets.xcassets */,
+				50E28B822C40BCB3007891E0 /* Localizable.xcstrings */,
+				501D5DEC2C40C18000F1E177 /* InfoPlist.xcstrings */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		50D44CF92C3F91F700CF6A69 = {
 			isa = PBXGroup;
 			children = (
@@ -116,15 +166,9 @@
 		50D44D042C3F91F700CF6A69 /* Asspp */ = {
 			isa = PBXGroup;
 			children = (
-				50D44D152C3F927D00CF6A69 /* main.swift */,
-				50D44D092C3F91F800CF6A69 /* Assets.xcassets */,
-				50E28B822C40BCB3007891E0 /* Localizable.xcstrings */,
-				501D5DEC2C40C18000F1E177 /* InfoPlist.xcstrings */,
-				50D44D342C3F9F4800CF6A69 /* Welcome */,
-				50D44D332C3F9F4200CF6A69 /* Account */,
-				50D44D352C3F9F5300CF6A69 /* Search */,
-				50D44D362C3F9F5600CF6A69 /* Download */,
-				50D44D372C3F9F5900CF6A69 /* Setting */,
+				5095BD262C422B1B000EA1F6 /* App */,
+				5095BD252C422B15000EA1F6 /* Interface */,
+				5095BD242C422B00000EA1F6 /* Backend */,
 				50D44D382C3F9F5D00CF6A69 /* Extension */,
 				50E6C5672C40CB7500460DB5 /* Certificates */,
 			);
@@ -144,7 +188,6 @@
 				50D44D252C3F946100CF6A69 /* AccountView.swift */,
 				50D44D3B2C3FA34400CF6A69 /* AccountDetailView.swift */,
 				50D44D392C3F9F6A00CF6A69 /* AddAccountView.swift */,
-				50D44D312C3F9F3500CF6A69 /* AppStore.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -162,7 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				50D44D272C3F946600CF6A69 /* SearchView.swift */,
-				50D44D422C3FA6DC00CF6A69 /* StoreView.swift */,
+				50D44D422C3FA6DC00CF6A69 /* ProductView.swift */,
 				50D44D402C3FA6CC00CF6A69 /* ArchivePreviewView.swift */,
 			);
 			path = Search;
@@ -172,14 +215,10 @@
 			isa = PBXGroup;
 			children = (
 				50D44D292C3F946C00CF6A69 /* DownloadView.swift */,
-				50D44D442C3FAC4900CF6A69 /* DownloadManager.swift */,
+				5095BD272C4233E7000EA1F6 /* AddDownloadView.swift */,
 				50D44D492C3FB97A00CF6A69 /* PackageView.swift */,
-				50D0C8C12C40253800538F49 /* Installer.swift */,
-				50D0C8BF2C401DE000538F49 /* Installer+Compute.swift */,
-				50D0C8BD2C401B7B00538F49 /* Installer+Pic.swift */,
-				50D0C8BB2C401B3000538F49 /* Installer+App.swift */,
-				50D0C8B92C401AD600538F49 /* Installer+TLS.swift */,
 				50D44D4D2C3FC0DD00CF6A69 /* InstallerView.swift */,
+				5095BD292C423442000EA1F6 /* SimpleProgress.swift */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -223,11 +262,11 @@
 				50D44D1F2C3F92BB00CF6A69 /* NIOTLS */,
 				50D44D222C3F92C500CF6A69 /* NIOSSL */,
 				50D44D3E2C3FA59500CF6A69 /* Kingfisher */,
-				50D44D472C3FAE8000CF6A69 /* Tiercel */,
 				50D44D502C3FC85F00CF6A69 /* AnyCodable */,
 				50D0C8B72C40187800538F49 /* Vapor */,
 				50E28B802C40BA52007891E0 /* ColorfulX */,
 				5060B2FE2C412E730076A4EE /* FLEX */,
+				506367A22C42382900634EEA /* Digger */,
 			);
 			productName = Asspp;
 			productReference = 50D44D022C3F91F700CF6A69 /* Asspp.app */;
@@ -262,7 +301,6 @@
 				50D44D1A2C3F92BB00CF6A69 /* XCRemoteSwiftPackageReference "swift-nio" */,
 				50D44D212C3F92C500CF6A69 /* XCRemoteSwiftPackageReference "swift-nio-ssl" */,
 				50D44D3D2C3FA59500CF6A69 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				50D44D462C3FAE8000CF6A69 /* XCRemoteSwiftPackageReference "Tiercel" */,
 				50D44D4F2C3FC85F00CF6A69 /* XCRemoteSwiftPackageReference "AnyCodable" */,
 				50D0C8B62C40187800538F49 /* XCRemoteSwiftPackageReference "vapor" */,
 				50E28B7F2C40BA52007891E0 /* XCRemoteSwiftPackageReference "ColorfulX" */,
@@ -297,12 +335,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				50D44D282C3F946600CF6A69 /* SearchView.swift in Sources */,
+				506367A92C423D2700634EEA /* Downloads+Report.swift in Sources */,
+				5095BD282C4233E7000EA1F6 /* AddDownloadView.swift in Sources */,
+				506367A72C423CE900634EEA /* MD5.swift in Sources */,
 				50D44D262C3F946100CF6A69 /* AccountView.swift in Sources */,
+				5095BD2A2C423442000EA1F6 /* SimpleProgress.swift in Sources */,
 				50D0C8BA2C401AD600538F49 /* Installer+TLS.swift in Sources */,
 				50D44D3A2C3F9F6A00CF6A69 /* AddAccountView.swift in Sources */,
 				50D44D082C3F91F700CF6A69 /* MainView.swift in Sources */,
-				50D44D432C3FA6DC00CF6A69 /* StoreView.swift in Sources */,
+				50D44D432C3FA6DC00CF6A69 /* ProductView.swift in Sources */,
 				50D44D4A2C3FB97A00CF6A69 /* PackageView.swift in Sources */,
+				506367AB2C423D4C00634EEA /* Downloads+Request.swift in Sources */,
 				50D44D412C3FA6CC00CF6A69 /* ArchivePreviewView.swift in Sources */,
 				50D44D302C3F96B900CF6A69 /* PublishedPersist.swift in Sources */,
 				50D44D4E2C3FC0DD00CF6A69 /* InstallerView.swift in Sources */,
@@ -316,7 +359,7 @@
 				50D0C8BC2C401B3000538F49 /* Installer+App.swift in Sources */,
 				50D44D2A2C3F946C00CF6A69 /* DownloadView.swift in Sources */,
 				50D44D2E2C3F954400CF6A69 /* WelcomeView.swift in Sources */,
-				50D44D452C3FAC4900CF6A69 /* DownloadManager.swift in Sources */,
+				50D44D452C3FAC4900CF6A69 /* Downloads.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,8 +491,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -463,7 +506,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.Asspp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -478,8 +521,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -493,7 +536,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.Asspp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -566,14 +609,6 @@
 				minimumVersion = 7.12.0;
 			};
 		};
-		50D44D462C3FAE8000CF6A69 /* XCRemoteSwiftPackageReference "Tiercel" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Danie1s/Tiercel";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.2.5;
-			};
-		};
 		50D44D4F2C3FC85F00CF6A69 /* XCRemoteSwiftPackageReference "AnyCodable" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Flight-School/AnyCodable";
@@ -597,6 +632,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5060B2FD2C412E730076A4EE /* XCRemoteSwiftPackageReference "FLEX" */;
 			productName = FLEX;
+		};
+		506367A22C42382900634EEA /* Digger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Digger;
 		};
 		50D0C8B72C40187800538F49 /* Vapor */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -631,11 +670,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 50D44D3D2C3FA59500CF6A69 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		50D44D472C3FAE8000CF6A69 /* Tiercel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 50D44D462C3FAE8000CF6A69 /* XCRemoteSwiftPackageReference "Tiercel" */;
-			productName = Tiercel;
 		};
 		50D44D502C3FC85F00CF6A69 /* AnyCodable */ = {
 			isa = XCSwiftPackageProductDependency;
