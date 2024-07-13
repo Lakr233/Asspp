@@ -61,7 +61,7 @@ Download the latest version from [Releases](https://github.com/Lakr233/Asspp/rel
 
 ## Source Code
 
-Source code is granted case by case, only requests from my most trusted friends will be considered. Please contact me if you need it.
+1.2.10 is the only version that is open sourced. All future updates will not be open sourced.
 
 ## 🧑‍⚖️ License
 

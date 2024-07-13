@@ -106,19 +106,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5095BD242C422B00000EA1F6 /* Backend */ = {
+		5047BC102C4283B8006EB288 /* Downloader */ = {
 			isa = PBXGroup;
 			children = (
-				50D44D312C3F9F3500CF6A69 /* AppStore.swift */,
 				50D44D442C3FAC4900CF6A69 /* Downloads.swift */,
 				506367AA2C423D4C00634EEA /* Downloads+Request.swift */,
 				506367A82C423D2700634EEA /* Downloads+Report.swift */,
+			);
+			path = Downloader;
+			sourceTree = "<group>";
+		};
+		5047BC112C4283C1006EB288 /* AppStore */ = {
+			isa = PBXGroup;
+			children = (
+				50D44D312C3F9F3500CF6A69 /* AppStore.swift */,
+			);
+			path = AppStore;
+			sourceTree = "<group>";
+		};
+		5047BC122C4283CF006EB288 /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
 				506367A62C423CE900634EEA /* MD5.swift */,
+			);
+			path = MD5;
+			sourceTree = "<group>";
+		};
+		5047BC132C4283D6006EB288 /* Installer */ = {
+			isa = PBXGroup;
+			children = (
 				50D0C8C12C40253800538F49 /* Installer.swift */,
 				50D0C8BF2C401DE000538F49 /* Installer+Compute.swift */,
 				50D0C8BD2C401B7B00538F49 /* Installer+Pic.swift */,
 				50D0C8BB2C401B3000538F49 /* Installer+App.swift */,
 				50D0C8B92C401AD600538F49 /* Installer+TLS.swift */,
+			);
+			path = Installer;
+			sourceTree = "<group>";
+		};
+		5095BD242C422B00000EA1F6 /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				5047BC112C4283C1006EB288 /* AppStore */,
+				5047BC102C4283B8006EB288 /* Downloader */,
+				5047BC122C4283CF006EB288 /* MD5 */,
+				5047BC132C4283D6006EB288 /* Installer */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -492,7 +524,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -522,7 +554,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
