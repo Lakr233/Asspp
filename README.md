@@ -4,6 +4,8 @@ The App Store for your multi-account eco system.
 
 [简体中文 🇨🇳](./Resources/i18n/zh-Hans/README.md)
 
+**Archived due to stable, no tech support will be provided. Fix any issue yourself.**
+
 ## 👀 Preview
 
 ![Screenshot](./Resources/Screenshots/Screenshot-0.png)

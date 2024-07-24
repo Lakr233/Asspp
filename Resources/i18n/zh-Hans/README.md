@@ -2,6 +2,8 @@
 
 就是有多账号支持的 App Store 辅助工具。不能替代 App Store 但是够你用了。
 
+**开源仓库的项目已归档，不再提供任何技术支持或需求更新。如有问题，请自行解决。**
+
 ## 👀 预览
 
 ![截图](../../../Resources/Screenshots/Screenshot-0.png)
