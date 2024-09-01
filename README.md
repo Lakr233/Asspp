@@ -6,6 +6,8 @@ The App Store for your multi-account eco system.
 
 **Archived due to stable, no tech support will be provided. Fix any issue yourself.**
 
+**Due to huge amount of installation, the MZBuy endpoint used to purchase free apps is now banned by Apple. No update will be provided to fix this.**
+
 ## 👀 Preview
 
 ![Screenshot](./Resources/Screenshots/Screenshot-0.png)
