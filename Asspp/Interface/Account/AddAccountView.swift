@@ -30,8 +30,15 @@ struct AddAccountView: View {
                     .autocapitalization(.none)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
-                SecureField("Password", text: $password)
-                    .textContentType(.password)
+                if isPasswordHidden {
+                    SecureField("Password", text: $password)
+                        .textContentType(.password)
+                } else {
+                    TextField("Password", text: $password)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .textContentType(.password)
+                }
             } header: {
                 HStack {
                     Text("Apple ID")
