@@ -38,6 +38,7 @@ struct AddAccountView: View {
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .textContentType(.password)
+                        .font(.system(.footnote, design: .monospaced))
                 }
             } header: {
                 HStack {
@@ -49,10 +50,7 @@ struct AddAccountView: View {
                     .disabled(password.isEmpty)
                 }
             } footer: {
-                let passwordPrefix = if !isPasswordHidden, !password.isEmpty {
-                    Text(password + "\n\n").font(.system(.footnote, design: .monospaced))
-                } else { Text(String()) }
-                Text("\(passwordPrefix)Your account is saved in your Keychain and will be synced across devices with the same iCloud account signed in.")
+                Text("Your account is saved in your Keychain and will be synced across devices with the same iCloud account signed in.")
             }
             if codeRequired {
                 Section {
