@@ -22,6 +22,7 @@ public struct Software: Codable, Equatable, Hashable, Identifiable {
     public var screenshotUrls: [String]
     public var minimumOsVersion: String
     public var releaseDate: String
+    public var releaseNotes: String?
     public var formattedPrice: String
     public var primaryGenreName: String
 
@@ -39,7 +40,8 @@ public struct Software: Codable, Equatable, Hashable, Identifiable {
         case artworkUrl = "artworkUrl512"
         case screenshotUrls
         case minimumOsVersion
-        case releaseDate
+        case releaseDate = "currentVersionReleaseDate"
+        case releaseNotes
         case formattedPrice
         case primaryGenreName
     }

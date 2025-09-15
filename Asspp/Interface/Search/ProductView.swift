@@ -34,7 +34,10 @@ struct ProductView: View {
 
     var body: some View {
         List {
+            accountSelector
+            buttons
             packageHeader
+            packageDescription
             if account == nil {
                 Section {
                     Text("No account available for this region.")
@@ -46,8 +49,6 @@ struct ProductView: View {
                 }
             }
             pricing
-            accountSelector
-            buttons
         }
         .onAppear {
             selection = eligibleAccounts.first?.id ?? .init()
@@ -74,8 +75,26 @@ struct ProductView: View {
             PackageDisplayView(archive: archive)
         } header: {
             Text("Package")
-        } footer: {
-            Label("\(archive.software.bundleID) - \(archive.software.version)", systemImage: "app")
+        }
+    }
+
+    var packageDescription: some View {
+        Section {
+            NavigationLink {
+                Text("History View")
+            } label: {
+                HStack {
+                    Text("Version \(archive.software.version)")
+                    Spacer()
+                    if let date = archive.releaseDate {
+                        Text(date.formatted(.relative(presentation: .numeric)))
+                    }
+                }
+            }
+
+            Text(archive.software.releaseNotes ?? "")
+        } header: {
+            Text("What's New")
         }
     }
 

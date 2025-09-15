@@ -13,10 +13,12 @@ extension AppStore {
         var id: String { software.bundleID }
 
         let software: ApplePackage.Software
+        let releaseDate: Date?
         var downloadOutput: ApplePackage.DownloadOutput?
 
         init(software: ApplePackage.Software) {
             self.software = software
+            releaseDate = ISO8601DateFormatter().date(from: software.releaseDate)
         }
 
         static func == (lhs: AppPackage, rhs: AppPackage) -> Bool {
