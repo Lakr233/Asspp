@@ -56,13 +56,13 @@ struct ProductView: View {
         }
         .navigationTitle("Select Account")
         .alert("License Required", isPresented: $showLicenseAlert) {
-            var confimRole: ButtonRole?
+            var confirmRole: ButtonRole?
             if #available(iOS 26.0, *) {
-                confimRole = .confirm
+                confirmRole = .confirm
             }
 
             return Group {
-                Button("Acquire License", role: confimRole) {
+                Button("Acquire License", role: confirmRole) {
                     acquireLicense()
                 }
 
