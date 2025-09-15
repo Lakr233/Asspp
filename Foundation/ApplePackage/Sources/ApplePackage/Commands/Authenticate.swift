@@ -75,7 +75,7 @@ public enum Authenticator {
                     continue
                 case .codeRequired:
                     currentAttempt += 65535 // stop attempts
-                    try ensureFailed("Authentication requires verification code\nIf no verification code prompted, try login it at https://account.apple.com to trigger the alert and fill the code in the 2FA Code box.")
+                    try ensureFailed("Authentication requires verification code\nIf no verification code prompted, try logging in at https://account.apple.com to trigger the alert and fill the code in the 2FA Code here.")
                 case .retry:
                     continue
                 case let .failure(string):

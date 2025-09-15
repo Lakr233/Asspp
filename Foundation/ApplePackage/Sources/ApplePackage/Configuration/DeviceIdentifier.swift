@@ -10,10 +10,8 @@ import Foundation
 public enum DeviceIdentifier {
     public static func system() throws -> String {
         #if os(iOS)
-        if #available(iOS 7.0, *) {
-            // https://developer.apple.com/library/archive/releasenotes/General/WhatsNewIniOS/Articles/iOS7.html#:~:text=returns%20the%20value-,02:00:00:00:00:00,-.%20If%20you%20need
-            try ensureFailed("will always return: 02:00:00:00:00:00")
-        }
+        // https://developer.apple.com/library/archive/releasenotes/General/WhatsNewIniOS/Articles/iOS7.html#:~:text=returns%20the%20value-,02:00:00:00:00:00,-.%20If%20you%20need
+        try ensureFailed("will always return: 02:00:00:00:00:00")
         #endif
         let MAC_ADDRESS_LENGTH = 6
         let bsds: [String] = ["en0", "en1"]
