@@ -14,6 +14,7 @@ struct AddAccountView: View {
 
     @State var email: String = ""
     @State var password: String = ""
+    @State var isPasswordHidden = true
 
     @State var codeRequired: Bool = false
     @State var code: String = ""
@@ -27,11 +28,24 @@ struct AddAccountView: View {
                 TextField("Email (Apple ID)", text: $email)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
                 SecureField("Password", text: $password)
+                    .textContentType(.password)
             } header: {
-                Text("Apple ID")
+                HStack {
+                    Text("Apple ID")
+                    Spacer()
+                    Button(isPasswordHidden ? "Show Password" : "Hide Password") {
+                        isPasswordHidden.toggle()
+                    }
+                    .disabled(password.isEmpty)
+                }
             } footer: {
-                Text("Your account is saved in your Keychain and will be synced across devices with the same iCloud account signed in.")
+                let passwordPrefix = if !isPasswordHidden, !password.isEmpty {
+                    Text(password + "\n\n").font(.system(.footnote, design: .monospaced))
+                } else { Text(String()) }
+                Text("\(passwordPrefix)Your account is saved in your Keychain and will be synced across devices with the same iCloud account signed in.")
             }
             if codeRequired {
                 Section {
