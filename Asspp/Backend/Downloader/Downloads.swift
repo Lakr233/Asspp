@@ -53,7 +53,7 @@ class Downloads: NSObject, ObservableObject {
     }
 
     func downloadRequest(forArchive archive: AppStore.AppPackage) -> PackageManifest? {
-        manifests.first { $0.package.id == archive.id }
+        manifests.first { $0.package.id == archive.id && $0.package.externalVersionID == archive.externalVersionID }
     }
 
     func add(request: PackageManifest) -> PackageManifest {

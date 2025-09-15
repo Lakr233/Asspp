@@ -50,4 +50,18 @@ class AppStore: ObservableObject {
     func eligibleAccounts(for region: String) -> [UserAccount] {
         accounts.filter { ApplePackage.Configuration.countryCode(for: $0.account.store) == region }
     }
+
+    func withAccount<T>(id: String, _ body: (inout UserAccount) async throws -> T) async throws -> T {
+        if let idx = await accounts.firstIndex(where: { $0.id == id }) {
+            var account = await accounts[idx]
+            let result = try await body(&account)
+            let updatedAccount = account
+            await MainActor.run {
+                accounts[idx] = updatedAccount
+            }
+            return result
+        } else {
+            throw AuthenticationError.accountNotFound
+        }
+    }
 }

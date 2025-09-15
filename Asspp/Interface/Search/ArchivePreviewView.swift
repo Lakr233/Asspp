@@ -20,11 +20,15 @@ struct ArchivePreviewView: View {
                 .cornerRadius(8)
                 .frame(width: 32, height: 32, alignment: .center)
             VStack(alignment: .leading, spacing: 2) {
-                Text(archive.software.name)
-                    .font(.system(.body, design: .rounded))
-                    .bold()
+                HStack {
+                    Text(archive.software.name)
+                        .font(.system(.body, design: .rounded))
+                        .bold()
+                    Spacer()
+                    Text(archive.software.version)
+                }
                 Group {
-                    Text("\(archive.software.bundleID) \(archive.software.version)")
+                    Text("\(archive.software.bundleID)")
                 }
                 .font(.system(.footnote, design: .rounded))
                 .foregroundStyle(.secondary)
