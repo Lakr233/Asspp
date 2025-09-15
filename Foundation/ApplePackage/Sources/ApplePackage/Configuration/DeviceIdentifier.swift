@@ -12,7 +12,7 @@ public enum DeviceIdentifier {
         #if os(iOS)
         // https://developer.apple.com/library/archive/releasenotes/General/WhatsNewIniOS/Articles/iOS7.html#:~:text=returns%20the%20value-,02:00:00:00:00:00,-.%20If%20you%20need
         try ensureFailed("will always return: 02:00:00:00:00:00")
-        #endif
+        #else
         let MAC_ADDRESS_LENGTH = 6
         let bsds: [String] = ["en0", "en1"]
         var bsd: String = bsds[0]
@@ -56,6 +56,7 @@ public enum DeviceIdentifier {
         try ensure(!result.isEmpty, "unable to get mac address")
 
         return result
+        #endif
     }
 
     public static func random() -> String {
