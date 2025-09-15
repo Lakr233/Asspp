@@ -19,7 +19,12 @@ struct SearchView: View {
     let regionKeys = Array(ApplePackage.Configuration.storeFrontValues.keys.sorted())
 
     @State var searchInput: String = ""
+    #if DEBUG
+    @AppStorage("searchResults") // reduce API calls
+    var searchResult: [AppStore.AppPackage] = []
+    #else
     @State var searchResult: [AppStore.AppPackage] = []
+    #endif
 
     @StateObject var vm = AppStore.this
 
@@ -134,3 +139,25 @@ struct SearchView: View {
         }
     }
 }
+
+#if DEBUG
+private typealias AppPackages = [AppStore.AppPackage]
+extension AppPackages: @retroactive RawRepresentable {
+    public init?(rawValue: String) {
+        guard
+            let data = rawValue.data(using: .utf8),
+            let decoded = try? JSONDecoder().decode([AppStore.AppPackage].self, from: data)
+        else { return nil }
+
+        self = decoded
+    }
+
+    public var rawValue: String {
+        guard let data = try? JSONEncoder().encode(self),
+              let rawValue = String(data: data, encoding: .utf8)
+        else { return "" }
+
+        return rawValue
+    }
+}
+#endif
