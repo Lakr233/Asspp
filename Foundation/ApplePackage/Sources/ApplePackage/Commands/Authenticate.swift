@@ -75,7 +75,7 @@ public enum Authenticator {
                     continue
                 case .codeRequired:
                     currentAttempt += 65535 // stop attempts
-                    try ensureFailed("authentication requires verification code")
+                    try ensureFailed("Authentication requires verification code\nIf no verification code prompted, try login it at https://account.apple.com to trigger the alert and fill the code in the 2FA Code box.")
                 case .retry:
                     continue
                 case let .failure(string):
@@ -201,8 +201,9 @@ public enum Authenticator {
             return .codeRequired
         }
 
-        let accountInfoDic = try (dic["accountInfo"] as? [String: Any]).get("missing accountInfo")
-        let addressInfoDic = try (accountInfoDic["address"] as? [String: Any]).get("missing address")
+        let failureMessage = (dic["dialog"] as? [String: Any])?["explanation"] as? String ?? (dic["customerMessage"] as? String)
+        let accountInfoDic = try (dic["accountInfo"] as? [String: Any]).get(failureMessage ?? "missing accountInfo")
+        let addressInfoDic = try (accountInfoDic["address"] as? [String: Any]).get(failureMessage ?? "missing address")
 
         let account = try Account(
             email: email,
