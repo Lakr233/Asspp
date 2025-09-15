@@ -26,6 +26,7 @@ struct ProductView: View {
 
     @State var selection: AppStore.UserAccount.ID = .init()
     @State var obtainDownloadURL = false
+    @State var showDownloadPage = false
     @State var licenseHint: String = ""
     @State var acquiringLicense = false
     @State var showLicenseAlert = false
@@ -145,7 +146,7 @@ struct ProductView: View {
     var buttons: some View {
         Section {
             if let req = dvm.downloadRequest(forArchive: archive) {
-                NavigationLink(destination: PackageView(pkg: req)) {
+                NavigationLink(destination: PackageView(pkg: req), isActive: $showDownloadPage) {
                     Text("Show Download")
                 }
             } else {
@@ -188,6 +189,7 @@ struct ProductView: View {
                     obtainDownloadURL = false
                     hint = String(localized: "Download Requested")
                     hintColor = nil
+                    showDownloadPage = true
                 }
             } catch ApplePackageError.licenseRequired where archive.software.price == 0 && !acquiringLicense {
                 DispatchQueue.main.async {
