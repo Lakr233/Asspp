@@ -59,7 +59,7 @@ public enum Download {
             case "2034":
                 try ensureFailed("password token is expired")
             case "9610":
-                try ensureFailed("license is required")
+                throw ApplePackageError.licenseRequired
             default:
                 if let customerMessage = dict["customerMessage"] as? String {
                     try ensureFailed(customerMessage)

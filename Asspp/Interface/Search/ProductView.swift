@@ -28,7 +28,9 @@ struct ProductView: View {
     @State var obtainDownloadURL = false
     @State var licenseHint: String = ""
     @State var acquiringLicense = false
+    @State var showLicenseAlert = false
     @State var hint: String = ""
+    @State var hintColor: Color?
 
     var body: some View {
         List {
@@ -51,6 +53,20 @@ struct ProductView: View {
             selection = eligibleAccounts.first?.id ?? .init()
         }
         .navigationTitle("Select Account")
+        .alert("License Required", isPresented: $showLicenseAlert) {
+            var confimRole: ButtonRole?
+            if #available(iOS 26.0, *) {
+                confimRole = .confirm
+            }
+
+            return Group {
+                Button("Acquire License", role: confimRole) {
+                    acquireLicense()
+                }
+
+                Button("Cancel", role: .cancel) {}
+            }
+        } message: {}
     }
 
     var packageHeader: some View {
@@ -127,7 +143,7 @@ struct ProductView: View {
                 Text("Package can be installed later in download page.")
             } else {
                 Text(hint)
-                    .foregroundStyle(.red)
+                    .foregroundColor(hintColor)
             }
         }
     }
@@ -152,11 +168,18 @@ struct ProductView: View {
                 await MainActor.run {
                     obtainDownloadURL = false
                     hint = String(localized: "Download Requested")
+                    hintColor = nil
+                }
+            } catch ApplePackageError.licenseRequired where archive.software.price == 0 && !acquiringLicense {
+                DispatchQueue.main.async {
+                    obtainDownloadURL = false
+                    showLicenseAlert = true
                 }
             } catch {
                 DispatchQueue.main.async {
                     obtainDownloadURL = false
                     hint = String(localized: "Unable to retrieve download url, please try again later.") + "\n" + error.localizedDescription
+                    hintColor = .red
                 }
             }
         }
