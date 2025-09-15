@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PackageDisplayView: View {
     let archive: AppStore.AppPackage
-    let style: DisplayStyle
+    @State var style: DisplayStyle = .compact
 
     enum DisplayStyle {
         case compact
@@ -19,42 +19,51 @@ struct PackageDisplayView: View {
     }
 
     var body: some View {
-        switch style {
-        case .compact:
-            HStack(spacing: 8) {
-                KFImage(URL(string: archive.software.artworkUrl))
-                    .antialiased(true)
-                    .resizable()
-                    .cornerRadius(8)
-                    .frame(width: 32, height: 32, alignment: .center)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(archive.software.name)
-                        .font(.system(.body, design: .rounded))
-                        .bold()
-                    Group {
-                        Text("\(archive.software.bundleID) \(archive.software.version)")
+        _body
+            .overlay(alignment: .bottomTrailing) {
+                if style != .detail {
+                    Button {
+                        style = .detail
+                    } label: {
+                        Text("more")
+                            .font(.system(.footnote, design: .rounded))
+                            .padding(.leading, 10)
                     }
-                    .font(.system(.footnote, design: .rounded))
-                    .foregroundStyle(.secondary)
+                    .background(LinearGradient(
+                        gradient: Gradient(colors: [.clear, .white]),
+                        startPoint: .init(x: 0, y: 0.5),
+                        endPoint: .init(x: 0.2, y: 0.5)
+                    ).blendMode(.destinationOut))
+                    .transition(.scale)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        case .detail:
-            VStack(alignment: .leading, spacing: 8) {
-                KFImage(URL(string: archive.software.artworkUrl))
-                    .antialiased(true)
-                    .resizable()
-                    .cornerRadius(8)
-                    .frame(width: 50, height: 50, alignment: .center)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(archive.software.name)
-                    .bold()
-                if !archive.software.description.isEmpty {
-                    Text(archive.software.description)
-                        .font(.system(.footnote, design: .rounded))
-                }
-            }
+            .compositingGroup()
             .padding(.vertical, 4)
+
+    }
+    @ViewBuilder
+    var _body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            KFImage(URL(string: archive.software.artworkUrl))
+                .antialiased(true)
+                .resizable()
+                .cornerRadius(8)
+                .frame(width: 50, height: 50, alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(archive.software.name)
+                .bold()
+            if !archive.software.description.isEmpty {
+                Group {
+                    switch style {
+                    case .compact:
+                        Text(archive.software.description)
+                            .lineLimit(3)
+                    case .detail:
+                        Text(archive.software.description)
+                    }
+                }
+                .font(.system(.footnote, design: .rounded))
+            }
         }
     }
 }

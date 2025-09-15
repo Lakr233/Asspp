@@ -55,7 +55,7 @@ struct ProductView: View {
 
     var packageHeader: some View {
         Section {
-            PackageDisplayView(archive: archive, style: .detail)
+            PackageDisplayView(archive: archive)
         } header: {
             Text("Package")
         } footer: {
