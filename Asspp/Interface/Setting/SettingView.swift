@@ -8,6 +8,10 @@
 import ApplePackage
 import SwiftUI
 
+#if canImport(UIKit)
+    import UIKit
+#endif
+
 struct SettingView: View {
     @StateObject var vm = AppStore.this
 
@@ -42,6 +46,18 @@ struct SettingView: View {
                 } footer: {
                     Text("Grant local network permission to install apps and communicate with system services. If hostname is empty, open Settings to grant permission.")
                 }
+
+                #if canImport(UIKit)
+                    Section {
+                        Button("Install Certificate") {
+                            UIApplication.shared.open(Installer.caURL)
+                        }
+                    } header: {
+                        Text("SSL")
+                    } footer: {
+                        Text("On device installer requires your system to trust a self signed certificate. Tap the button to install it. After install, navigate to Settings > General > About > Certificate Trust Settings and enable full trust for the certificate.")
+                    }
+                #endif
 
                 Section {
                     Button("@Lakr233") {

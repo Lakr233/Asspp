@@ -22,6 +22,14 @@ extension Installer {
         withExtension: "pem",
         subdirectory: "Certificates/localhost.qaq.wiki"
     )
+    static let ca = Bundle.main.url(
+        forResource: "rootCA",
+        withExtension: "pem",
+        subdirectory: "Certificates/localhost.qaq.wiki"
+    )!
+
+    static var caURL: URL = .init(fileURLWithPath: "/tmp/")
+    static var caInstaller: Installer?
 
     static func setupTLS() throws -> TLSConfiguration {
         guard let crt, let pem else {

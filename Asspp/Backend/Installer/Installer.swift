@@ -31,7 +31,7 @@ class Installer: Identifiable, ObservableObject, @unchecked Sendable {
         let id: UUID = .init()
         self.id = id
         self.archive = archive
-        app = try await Self.setupApp(port: port)
+        app = try await Self.setupApp(port: port, secured: true)
         logger.info("Installer app setup completed for ID: \(id)")
 
         app.get("*") { [weak self] req in
@@ -89,6 +89,52 @@ class Installer: Identifiable, ObservableObject, @unchecked Sendable {
 
         try app.server.start()
         logger.info("installer init at port \(port) for sni \(Self.sni)")
+    }
+
+    // avoid misleading name, default parm Installer.ca is not used
+    init(certificateAtPath: String) async throws {
+        precondition(Installer.caInstaller == nil)
+
+        let id: UUID = .init()
+        self.id = id
+        archive = .init(software: .init(
+            id: .random(),
+            bundleID: "",
+            name: "",
+            version: "",
+            artistName: "",
+            sellerName: "",
+            description: "",
+            averageUserRating: 0,
+            userRatingCount: 0,
+            artworkUrl: "",
+            screenshotUrls: [],
+            minimumOsVersion: "",
+            releaseDate: "",
+            formattedPrice: "",
+            primaryGenreName: ""
+        ))
+
+        app = try await Self.setupApp(port: port, secured: false)
+
+        app.get("*") { req in
+            try await req.fileio.asyncStreamFile(
+                at: certificateAtPath,
+                chunkSize: 64 * 1024,
+            )
+        }
+
+        var comps = URLComponents()
+        comps.scheme = "http"
+        comps.host = "localhost"
+        comps.port = port
+        comps.path = "/ca.crt"
+        let url = comps.url!
+        Installer.caURL = url
+
+        try app.server.start()
+
+        Installer.caInstaller = self
     }
 
     deinit {

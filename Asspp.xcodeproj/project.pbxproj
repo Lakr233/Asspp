@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		507952E92E78740900954B8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		50D44D022C3F91F700CF6A69 /* Asspp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Asspp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E6C5672C40CB7500460DB5 /* Certificates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Certificates; path = Resources/Certificates; sourceTree = SOURCE_ROOT; };
 		80CD64EA2C42A7E80073E206 /* Asspp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Asspp.entitlements; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 		50D44D042C3F91F700CF6A69 /* Asspp */ = {
 			isa = PBXGroup;
 			children = (
+				507952E92E78740900954B8A /* Info.plist */,
 				80CD64EA2C42A7E80073E206 /* Asspp.entitlements */,
 				5081AB832E77CD1800F6E9F0 /* App */,
 				5081AB952E77CD1800F6E9F0 /* Backend */,
@@ -355,7 +357,9 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Asspp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Asspp requires this permission to communicate with install service on your device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -401,7 +405,9 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Asspp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Asspp requires this permission to communicate with install service on your device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

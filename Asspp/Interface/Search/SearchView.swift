@@ -35,74 +35,78 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             content
-                .navigationTitle("Search")
+                .searchable(text: $searchKey, prompt: "Keyword") {}
+                .onSubmit(of: .search) { search() }
+                .navigationTitle("Search - \(searchRegion.uppercased())")
+                .toolbar { tools }
         }
-        .navigationViewStyle(.stack)
+    }
+
+    @ToolbarContentBuilder
+    var tools: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Menu {
+                Picker(selection: $searchType) {
+                    ForEach(EntityType.allCases, id: \.self) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                } label: {
+                    Label("Type", systemImage: searchType.iconName)
+                }
+                .pickerStyle(.menu)
+                if !regionKeys.filter({ possibleRegion.contains($0) }).isEmpty {
+                    buildPickView(
+                        for: regionKeys.filter { possibleRegion.contains($0) }
+                    ) {
+                        Label("Available Regions", systemImage: "checkmark.seal")
+                    }
+                }
+                Menu {
+                    buildPickView(
+                        for: regionKeys
+                    ) {
+                        EmptyView()
+                    }
+                } label: {
+                    Label("All Regions", systemImage: "globe")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+            }
+        }
     }
 
     var content: some View {
         List {
-            Section {
-                Picker("Type", selection: $searchType) {
-                    ForEach(EntityType.allCases, id: \.self) { type in
-                        Text(type.rawValue)
-                            .tag(type)
-                    }
-                }
-                .pickerStyle(.menu)
-
-                buildRegionView()
-
-                TextField("Keyword", text: $searchKey)
-                    .focused($searchKeyFocused)
-                    .onSubmit { search() }
-            } header: {
-                Text("Metadata")
-            }
-            Section {
-                Button(searching ? "Searching..." : "Search") { search() }
-                    .disabled(searchKey.isEmpty)
-                    .disabled(searching)
-            }
-            Section {
-                ForEach(searchResult) { item in
-                    NavigationLink(destination: ProductView(archive: item, region: searchRegion)) {
-                        ArchivePreviewView(archive: item)
+            if searching || !searchResult.isEmpty {
+                Section(searching ? "Searching..." : "\(searchResult.count) Results") {
+                    ForEach(searchResult) { item in
+                        NavigationLink(destination: ProductView(archive: item, region: searchRegion)) {
+                            ArchivePreviewView(archive: item)
+                        }
                     }
                     .transition(.opacity)
                 }
-            } header: {
-                Text(searchInput)
+                .transition(.opacity)
             }
         }
         .animation(.spring, value: searchResult)
-    }
-
-    func buildRegionView() -> some View {
-        HStack {
-            Text("Region")
-            Spacer()
-            Menu {
-                Section("Account") {
-                    buildPickView(for: regionKeys.filter { possibleRegion.contains($0) })
-                }
-                Menu("All Regions") {
-                    buildPickView(for: regionKeys)
-                }
-            } label: {
-                HStack {
-                    Text("\(searchRegion) - \(ApplePackage.Configuration.storeFrontValues[searchRegion] ?? String(localized: "Unknown"))")
-                    Image(systemName: "arrow.up.arrow.down")
-                }
-            }
+        .onChange(of: searchRegion) { _ in
+            searchResult = []
+        }
+        .onChange(of: searchType) { _ in
+            searchResult = []
         }
     }
 
-    func buildPickView(for keys: [String]) -> some View {
-        ForEach(keys, id: \.self) { key in
-            Button("\(key) - \(ApplePackage.Configuration.storeFrontValues[key] ?? String(localized: "Unknown"))") {
-                searchRegion = key
+    func buildPickView(for keys: [String], label: () -> some View) -> some View {
+        Picker(selection: $searchRegion) {
+            ForEach(keys, id: \.self) { key in
+                Text("\(key) - \(ApplePackage.Configuration.storeFrontValues[key] ?? String(localized: "Unknown"))")
+                    .tag(key)
             }
+        } label: {
+            label()
         }
     }
 
@@ -161,3 +165,14 @@ extension AppPackages: @retroactive RawRepresentable {
     }
 }
 #endif
+
+extension ApplePackage.EntityType {
+    var iconName: String {
+        switch self {
+        case .iPhone:
+            "iphone"
+        case .iPad:
+            "ipad"
+        }
+    }
+}

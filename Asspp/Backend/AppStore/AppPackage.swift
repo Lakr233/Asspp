@@ -12,7 +12,7 @@ extension AppStore {
     struct AppPackage: Codable, Identifiable, Hashable {
         var id: String { software.bundleID }
 
-        var software: ApplePackage.Software
+        let software: ApplePackage.Software
         let releaseDate: Date?
         var downloadOutput: ApplePackage.DownloadOutput?
         var externalVersionID: String?

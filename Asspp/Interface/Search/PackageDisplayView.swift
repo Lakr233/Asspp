@@ -39,8 +39,8 @@ struct PackageDisplayView: View {
             }
             .compositingGroup()
             .padding(.vertical, 4)
-
     }
+
     @ViewBuilder
     var _body: some View {
         VStack(alignment: .leading, spacing: 8) {

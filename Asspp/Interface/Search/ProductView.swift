@@ -79,7 +79,7 @@ struct ProductView: View {
 
     var packageHeader: some View {
         Section {
-            PackageDisplayView(archive: archive.package)
+            PackageDisplayView(archive: archive)
         } header: {
             Text("Package")
         }
@@ -88,21 +88,18 @@ struct ProductView: View {
     var packageDescription: some View {
         Section {
             NavigationLink {
-                ProductHistoryView(vm: .init(accountID: account?.id, region: region, package: archive.package)) // use new archive to distinguish history or not
+                Text("History View")
             } label: {
                 HStack {
-                    Text("Version \(archive.version)")
+                    Text("Version \(archive.software.version)")
                     Spacer()
                     if let date = archive.releaseDate {
                         Text(date.formatted(.relative(presentation: .numeric)))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
                     }
                 }
             }
-            .disabled(archive.accountID != nil) // already searched with all the history versions
 
-            Text(archive.releaseNotes ?? "")
+            Text(archive.software.releaseNotes ?? "")
         } header: {
             Text("What's New")
         }
@@ -154,7 +151,7 @@ struct ProductView: View {
 
     var buttons: some View {
         Section {
-            if let req = dvm.downloadRequest(forArchive: archive.package) {
+            if let req = dvm.downloadRequest(forArchive: archive) {
                 NavigationLink(destination: PackageView(pkg: req), isActive: $showDownloadPage) {
                     Text("Show Download")
                 }
@@ -201,7 +198,7 @@ struct ProductView: View {
                     hintColor = nil
                     showDownloadPage = true
                 }
-            } catch ApplePackageError.licenseRequired where archive.price == 0 && !acquiringLicense {
+            } catch ApplePackageError.licenseRequired where archive.software.price == 0 && !acquiringLicense {
                 DispatchQueue.main.async {
                     obtainDownloadURL = false
                     showLicenseAlert = true

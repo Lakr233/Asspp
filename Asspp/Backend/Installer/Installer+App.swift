@@ -15,12 +15,12 @@ extension Installer {
         return env
     }()
 
-    static func setupApp(port: Int) async throws -> Application {
+    static func setupApp(port: Int, secured: Bool) async throws -> Application {
         let app = try await Application.make()
 
         app.threadPool = .init(numberOfThreads: 1)
 
-        app.http.server.configuration.tlsConfiguration = try Self.setupTLS()
+        if secured { app.http.server.configuration.tlsConfiguration = try Self.setupTLS() }
         app.http.server.configuration.hostname = Self.sni
         app.http.server.configuration.tcpNoDelay = true
 

@@ -15,7 +15,7 @@ extension ApplePackageError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .licenseRequired:
-            return "License required"
+            "License required"
         }
     }
 }
