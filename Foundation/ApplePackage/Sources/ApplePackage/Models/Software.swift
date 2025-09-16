@@ -45,4 +45,40 @@ public struct Software: Codable, Equatable, Hashable, Identifiable {
         case formattedPrice
         case primaryGenreName
     }
+
+    public init(
+        id: Int64,
+        bundleID: String,
+        name: String,
+        version: String,
+        price: Double? = nil,
+        artistName: String,
+        sellerName: String,
+        description: String,
+        averageUserRating: Double,
+        userRatingCount: Int,
+        artworkUrl: String,
+        screenshotUrls: [String],
+        minimumOsVersion: String,
+        releaseDate: String,
+        formattedPrice: String,
+        primaryGenreName: String
+    ) {
+        self.id = id
+        self.bundleID = bundleID
+        self.name = name
+        self.version = version
+        self.price = price
+        self.artistName = artistName
+        self.sellerName = sellerName
+        self.description = description
+        self.averageUserRating = averageUserRating
+        self.userRatingCount = userRatingCount
+        self.artworkUrl = artworkUrl
+        self.screenshotUrls = screenshotUrls
+        self.minimumOsVersion = minimumOsVersion
+        self.releaseDate = releaseDate
+        self.formattedPrice = formattedPrice
+        self.primaryGenreName = primaryGenreName
+    }
 }

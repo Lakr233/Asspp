@@ -79,9 +79,34 @@ do {
 DiggerManager.shared.maxConcurrentTasksCount = 3
 DiggerManager.shared.startDownloadImmediately = true
 
+Task.detached {
+    _ = try await Installer(certificateAtPath: Installer.ca.path)
+}
+
 App.main()
 
+#if canImport(UIKit)
+    import UIKit
+
+    class AppDelegate: NSObject, UIApplicationDelegate {
+        var taskIdentifier: UIBackgroundTaskIdentifier = .invalid
+
+        func applicationWillResignActive(_: UIApplication) {
+            let task = UIApplication.shared.beginBackgroundTask(withName: "Install Service") {}
+            taskIdentifier = task
+        }
+
+        func applicationWillEnterForeground(_: UIApplication) {
+            UIApplication.shared.endBackgroundTask(taskIdentifier)
+        }
+    }
+#endif
+
 private struct App: SwiftUI.App {
+    #if canImport(UIKit)
+        @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    #endif
+
     var body: some Scene {
         WindowGroup { MainView() }
     }

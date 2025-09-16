@@ -917,6 +917,16 @@
         }
       }
     },
+    "Install Certificate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装证书"
+          }
+        }
+      }
+    },
     "Install Completed" : {
       "localizations" : {
         "en" : {
@@ -961,17 +971,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通过 AirDrop 安装"
-          }
-        }
-      }
-    },
-    "Install via Troll Root" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用特权安装"
           }
         }
       }
@@ -1078,13 +1077,12 @@
         }
       }
     },
-    "OK" : {
-      "extractionState" : "stale",
+    "On device installer requires your system to trust a self signed certificate. Tap the button to install it. After install, navigate to Settings > General > About > Certificate Trust Settings and enable full trust for the certificate." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "好的"
+            "value" : "设备上的安装程序要求您的系统信任自签名证书。点击按钮安装。安装后，请前往“设置”>“通用”>“关于本机”>“证书信任设置”，并为该证书启用完全信任。"
           }
         }
       }
@@ -1613,6 +1611,16 @@
         }
       }
     },
+    "SSL" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSL"
+          }
+        }
+      }
+    },
     "Success" : {
       "localizations" : {
         "en" : {
@@ -1625,39 +1633,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "成功"
-          }
-        }
-      }
-    },
-    "System Installer Failed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "系统安装器出错"
-          }
-        }
-      }
-    },
-    "System Installer in Progress" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在使用系统安装器安装"
-          }
-        }
-      }
-    },
-    "System Installer Succeeded" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "安装成功"
           }
         }
       }
