@@ -19,6 +19,9 @@ class Downloads {
     @ObservationIgnored
     private var _manifests = Persist<[PackageManifest]>(key: "DownloadRequests", defaultValue: [])
 
+    @ObservationIgnored
+    private var lastProgressUpdates: [UUID: CFAbsoluteTime] = [:]
+
     var manifests: [PackageManifest] {
         get {
             access(keyPath: \.manifests)
@@ -72,16 +75,24 @@ class Downloads {
                     let fmt = ByteCountFormatter()
                     fmt.allowedUnits = .useAll
                     fmt.countStyle = .file
-                    request.state.status = .downloading
-                    request.state.speed = fmt.string(fromByteCount: Int64(speedBytes))
-                    self.saveManifests()
+                    var newState = request.state
+                    newState.status = .downloading
+                    newState.speed = fmt.string(fromByteCount: Int64(speedBytes))
+                    request.state = newState
                 }
             }
             .progress { progress in
                 Task { @MainActor in
-                    request.state.status = .downloading
-                    request.state.percent = progress.fractionCompleted
-                    self.saveManifests()
+                    let now = CFAbsoluteTimeGetCurrent()
+                    let fraction = progress.fractionCompleted
+                    let last = self.lastProgressUpdates[request.id] ?? 0
+                    guard fraction >= 1.0 || (now - last) >= 0.2 else { return }
+                    self.lastProgressUpdates[request.id] = now
+
+                    var newState = request.state
+                    newState.status = .downloading
+                    newState.percent = fraction
+                    request.state = newState
                 }
             }
             .completion { completion in
