@@ -72,6 +72,7 @@ class Downloads {
         DiggerManager.shared.download(with: request.url)
             .speed { speedBytes in
                 Task { @MainActor in
+                    guard request.state.status == .downloading || request.state.status == .pending else { return }
                     let fmt = ByteCountFormatter()
                     fmt.allowedUnits = .useAll
                     fmt.countStyle = .file
@@ -83,6 +84,7 @@ class Downloads {
             }
             .progress { progress in
                 Task { @MainActor in
+                    guard request.state.status == .downloading || request.state.status == .pending else { return }
                     let now = CFAbsoluteTimeGetCurrent()
                     let fraction = progress.fractionCompleted
                     let last = self.lastProgressUpdates[request.id] ?? 0
