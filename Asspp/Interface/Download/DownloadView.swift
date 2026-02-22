@@ -53,29 +53,38 @@ struct DownloadView: View {
 
     private var packageList: some View {
         ForEach(vm.manifests, id: \.id) { req in
-            NavigationLink(value: req) {
-                VStack(spacing: 8) {
-                    ArchivePreviewView(archive: req.package)
-                    SimpleProgress(progress: req.state.percent)
-                        .animation(.interactiveSpring, value: req.state.percent)
-                    HStack {
-                        Text(req.hint)
-                        Spacer()
-                        Text(req.creation.formatted())
-                    }
-                    .font(.system(.footnote, design: .rounded))
-                    .foregroundStyle(.secondary)
+            PackageManifestRow(manifest: req)
+        }
+    }
+}
+
+private struct PackageManifestRow: View {
+    let manifest: PackageManifest
+    @State private var vm = Downloads.this
+
+    var body: some View {
+        NavigationLink(value: manifest) {
+            VStack(spacing: 8) {
+                ArchivePreviewView(archive: manifest.package)
+                SimpleProgress(progress: manifest.state.percent)
+                    .animation(.interactiveSpring, value: manifest.state.percent)
+                HStack {
+                    Text(manifest.hint)
+                    Spacer()
+                    Text(manifest.creation.formatted())
                 }
+                .font(.system(.footnote, design: .rounded))
+                .foregroundStyle(.secondary)
             }
-            .contextMenu {
-                let actions = vm.getAvailableActions(for: req)
-                ForEach(actions, id: \.self) { action in
-                    let label = vm.getActionLabel(for: action)
-                    Button(role: label.isDestructive ? .destructive : .none) {
-                        vm.performDownloadAction(for: req, action: action)
-                    } label: {
-                        Label(label.title, systemImage: label.systemImage)
-                    }
+        }
+        .contextMenu {
+            let actions = vm.getAvailableActions(for: manifest)
+            ForEach(actions, id: \.self) { action in
+                let label = vm.getActionLabel(for: action)
+                Button(role: label.isDestructive ? .destructive : .none) {
+                    vm.performDownloadAction(for: manifest, action: action)
+                } label: {
+                    Label(label.title, systemImage: label.systemImage)
                 }
             }
         }
