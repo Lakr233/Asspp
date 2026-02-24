@@ -14,6 +14,7 @@ struct AddDownloadView: View {
     @State private var searchType: EntityType = .iPhone
     @State private var selection: AppStore.UserAccount.ID = .init()
     @State private var hint = ""
+    @State private var hintIsError = false
 
     @FocusState private var searchKeyFocused
 
@@ -68,10 +69,18 @@ struct AddDownloadView: View {
                 AsyncButton {
                     guard let account else { return }
                     searchKeyFocused = false
-                    let software = try await ApplePackage.Lookup.lookup(bundleID: bundleID, countryCode: account.account.store)
-                    let appPackage = AppStore.AppPackage(software: software)
-                    try await dvm.startDownload(for: appPackage, accountID: account.id)
-                    hint = "Download Requested"
+                    do {
+                        guard let countryCode = ApplePackage.Configuration.countryCode(for: account.account.store) else { return }
+                        let software = try await ApplePackage.Lookup.lookup(bundleID: bundleID, countryCode: countryCode)
+                        let appPackage = AppStore.AppPackage(software: software)
+                        try await dvm.startDownload(for: appPackage, accountID: account.id)
+                        hint = String(localized: "Download Requested")
+                        hintIsError = false
+                    } catch {
+                        hint = error.localizedDescription
+                        hintIsError = true
+                        throw error
+                    }
                 } label: {
                     Text("Request Download")
                 }
@@ -83,7 +92,7 @@ struct AddDownloadView: View {
                     Text("The package can be installed later from the Downloads page.")
                 } else {
                     Text(hint)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(hintIsError ? .red : .secondary)
                 }
             }
         }
