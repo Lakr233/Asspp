@@ -22,6 +22,7 @@
 		50DCBD782F346E01007100D2 /* Certificates in Resources */ = {isa = PBXBuildFile; fileRef = 50DCBD772F346DFE007100D2 /* Certificates */; };
 		50E28B812C40BA52007891E0 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = 50E28B802C40BA52007891E0 /* ColorfulX */; };
 		80CD64ED2C42AA2C0073E206 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 80CD64EC2C42AA2C0073E206 /* KeychainAccess */; };
+		E20AB0982C78DD66AF202F7C /* LookInsideServer in Frameworks */ = {isa = PBXBuildFile; productRef = A57ACB25387C8C8F3E31EC36 /* LookInsideServer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +31,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		50DCBC2D2F346C6F007100D2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		50DCBC2D2F346C6F007100D2 /* Exceptions for "Asspp" folder in "Asspp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -45,8 +46,29 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		50DCBBB42F346C57007100D2 /* Configuration */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Configuration; sourceTree = "<group>"; };
-		50DCBBF92F346C6F007100D2 /* Asspp */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (50DCBC2D2F346C6F007100D2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Asspp; sourceTree = "<group>"; };
+		50DCBBB42F346C57007100D2 /* Configuration */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		50DCBBF92F346C6F007100D2 /* Asspp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				50DCBC2D2F346C6F007100D2 /* Exceptions for "Asspp" folder in "Asspp" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Asspp;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +90,7 @@
 				80CD64ED2C42AA2C0073E206 /* KeychainAccess in Frameworks */,
 				50D44D1C2C3F92BB00CF6A69 /* NIO in Frameworks */,
 				50D44D202C3F92BB00CF6A69 /* NIOTLS in Frameworks */,
+				E20AB0982C78DD66AF202F7C /* LookInsideServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +158,7 @@
 				507974622E784D4E0016F540 /* Digger */,
 				50ABFB112F48A6D60077DE1A /* ApplePackage */,
 				50ABFE1E2F48AAE50077DE1A /* ButtonKit */,
+				A57ACB25387C8C8F3E31EC36 /* LookInsideServer */,
 			);
 			productName = Asspp;
 			productReference = 50D44D022C3F91F700CF6A69 /* Asspp.app */;
@@ -177,6 +201,7 @@
 				507974612E784D4E0016F540 /* XCRemoteSwiftPackageReference "Digger" */,
 				50ABFB102F48A6D60077DE1A /* XCRemoteSwiftPackageReference "ApplePackage" */,
 				50ABFE1D2F48AAE50077DE1A /* XCRemoteSwiftPackageReference "ButtonKit" */,
+				82E7AE7277E13A750B401DE9 /* XCRemoteSwiftPackageReference "LookInside-Release" */,
 			);
 			productRefGroup = 50D44D032C3F91F700CF6A69 /* Products */;
 			projectDirPath = "";
@@ -357,6 +382,10 @@
 			baseConfigurationReferenceAnchor = 50DCBBB42F346C57007100D2 /* Configuration */;
 			baseConfigurationReferenceRelativePath = Release.xcconfig;
 			buildSettings = {
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					"$(inherited)",
+					"LookInsideServer*",
+				);
 				INFOPLIST_KEY_CFBundleDisplayName = Asspp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Asspp requires this permission to communicate with install service on your device.";
@@ -413,7 +442,7 @@
 			repositoryURL = "https://github.com/Dean151/ButtonKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.0;
+				minimumVersion = 0.7.1;
 			};
 		};
 		50D0C8B62C40187800538F49 /* XCRemoteSwiftPackageReference "vapor" */ = {
@@ -478,6 +507,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.2.2;
+			};
+		};
+		82E7AE7277E13A750B401DE9 /* XCRemoteSwiftPackageReference "LookInside-Release" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LookInsideApp/LookInside-Release.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -551,6 +588,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80CD64EB2C42AA2C0073E206 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		A57ACB25387C8C8F3E31EC36 /* LookInsideServer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82E7AE7277E13A750B401DE9 /* XCRemoteSwiftPackageReference "LookInside-Release" */;
+			productName = LookInsideServer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
