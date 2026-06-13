@@ -51,6 +51,9 @@
                 $0.identifier?.rawValue == "main-window"
             }) {
                 mainWindow.styleMask = [.titled, .closable, .fullSizeContentView, .fullScreen]
+                mainWindow.toolbar?.allowsUserCustomization = false
+                mainWindow.toolbar?.allowsExtensionItems = false
+                mainWindow.toolbar?.allowsDisplayModeCustomization = false
             }
         }
 

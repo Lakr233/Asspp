@@ -79,40 +79,31 @@ struct SearchView: View {
         regionKeys.filter { possibleRegion.contains($0) }
     }
 
-    func searchRegionView(isAllRegionsWrappedInMenu: Bool = true) -> some View {
-        Group {
+    func searchRegionView() -> some View {
+        Menu {
             if !possibleRegionKeys.isEmpty {
                 buildPickView(
                     for: possibleRegionKeys,
                 ) {
                     Label("Available Regions", systemImage: "checkmark.seal")
                 }
-                if isAllRegionsWrappedInMenu {
-                    Menu {
-                        buildPickView(
-                            for: regionKeys,
-                        ) {
-                            EmptyView()
-                        }
-                    } label: {
-                        Label("All Regions", systemImage: "globe")
-                    }
-                } else {
-                    // Wrapping in Menu on macOS will cause an addition hover to show all the regions
-                    buildPickView(
-                        for: regionKeys,
-                    ) {
-                        Label("All Regions", systemImage: "globe")
-                    }
-                }
-            } else {
-                // Reduce one interaction
+                .pickerStyle(.inline)
+
                 buildPickView(
                     for: regionKeys,
                 ) {
-                    EmptyView()
+                    Label("All Regions", systemImage: "globe")
                 }
+                .pickerStyle(.menu)
+            } else {
+                buildPickView(
+                    for: regionKeys,
+                ) {
+                }
+                .pickerStyle(.inline)
             }
+        } label: {
+            Label(searchRegion, systemImage: "globe")
         }
         .onChange(of: searchRegion) { _, _ in
             searchResult = []
@@ -124,16 +115,17 @@ struct SearchView: View {
         ToolbarItem(placement: .automatic) {
             Menu {
                 searchTypePicker
-                    .pickerStyle(.menu)
-                Divider()
-                #if os(iOS)
-                    searchRegionView()
-                #else
-                    searchRegionView(isAllRegionsWrappedInMenu: false)
-                #endif
+                    .labelsHidden()
+                    .pickerStyle(.inline)
             } label: {
-                Image(systemName: "ellipsis.circle")
+                Label("Type", systemImage: searchType.iconName)
             }
+            .menuIndicator(.hidden)
+        }
+
+        ToolbarItem(placement: .automatic) {
+            searchRegionView()
+                .menuIndicator(.hidden)
         }
     }
 
@@ -182,7 +174,7 @@ struct SearchView: View {
         DispatchQueue.main.async { searchKeyFocused = true }
     }
 
-    func buildPickView(for keys: [String], label: () -> some View) -> some View {
+    func buildPickView(for keys: [String], @ViewBuilder label: () -> some View) -> some View {
         Picker(selection: $searchRegion) {
             ForEach(keys, id: \.self) { key in
                 Text("\(key) - \(ApplePackage.Configuration.storeFrontValues[key] ?? String(localized: "Unknown"))")
@@ -267,17 +259,17 @@ extension SearchView {
                 .safeAreaBar(edge: .top) {
                     if navigationBarVisibility == .hidden {
                         HStack {
-                            searchTypePicker
-                                .buttonStyle(.glass)
+                            Menu {
+                                searchTypePicker
+                            } label: {
+                                Label(searchType.rawValue, systemImage: searchType.iconName)
+                            }
+                            .buttonStyle(.glass)
+
                             Spacer()
 
-                            Menu {
-                                searchRegionView()
-                            } label: {
-                                Label(searchRegion, systemImage: "globe")
-                            }
-                            .menuIndicator(.visible)
-                            .buttonStyle(.glass)
+                            searchRegionView()
+                                .buttonStyle(.glass)
                         }
                         .padding([.bottom, .horizontal])
                     }
