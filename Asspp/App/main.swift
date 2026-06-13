@@ -88,6 +88,7 @@ private struct App: SwiftUI.App {
                 MainView()
             }
             .windowResizability(.contentSize)
+            .commands { SidebarMenuCommands() }
         #else
             WindowGroup(id: "main-window") {
                 if #available(iOS 26.0, *) {

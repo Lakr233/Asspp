@@ -9,6 +9,12 @@
     class AppDelegate: NSObject, NSApplicationDelegate {
         var activityToken: NSObjectProtocol?
 
+        func applicationWillFinishLaunching(_: Notification) {
+            // Remove the "Show Tab Bar" / "Show All Tabs" items from the View
+            // menu; this single-window app has no use for window tabbing.
+            NSWindow.allowsAutomaticWindowTabbing = false
+        }
+
         func applicationDidFinishLaunching(_: Notification) {
             Task { @MainActor in
                 self.observeDownloadCount()

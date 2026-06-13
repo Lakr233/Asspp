@@ -9,10 +9,23 @@ import ApplePackage
 import Kingfisher
 import SwiftUI
 
+/// Lets menu commands ask the search field to take focus. SearchView consumes
+/// the request on its next appearance, or immediately if already visible, and
+/// clears it — so the one-shot survives the view being recreated when the user
+/// switches sidebar sections.
+@MainActor
+@Observable
+final class SearchFieldFocus {
+    static let shared = SearchFieldFocus()
+    var pending = false
+    func requestFocus() { pending = true }
+}
+
 struct SearchView: View {
     @AppStorage("searchKey") var searchKey = ""
     @AppStorage("searchRegion") var searchRegion = "US"
     @FocusState var searchKeyFocused
+    @State private var searchFocus = SearchFieldFocus.shared
     @State private var searchType = EntityType.iPhone
 
     @State private var searching = false
@@ -153,6 +166,20 @@ struct SearchView: View {
             PackageView(pkg: manifest)
         }
         .animation(.spring, value: searchResult)
+        .onAppear { consumePendingFocus() }
+        .onChange(of: searchFocus.pending) { _, isPending in
+            if isPending { consumePendingFocus() }
+        }
+    }
+
+    /// Focuses the search field if a focus request is pending (e.g. after the
+    /// ⌘F menu command on macOS), then clears the request.
+    private func consumePendingFocus() {
+        guard searchFocus.pending else { return }
+        searchFocus.pending = false
+        // Defer so the search field exists when focus is assigned, whether the
+        // view was already visible or is appearing for the first time.
+        DispatchQueue.main.async { searchKeyFocused = true }
     }
 
     func buildPickView(for keys: [String], label: () -> some View) -> some View {
@@ -212,6 +239,9 @@ extension SearchView {
     var legacyContent: some View {
         content
             .searchable(text: $searchKey, prompt: "Keyword") {}
+            #if os(macOS)
+                .searchFocused($searchKeyFocused)
+            #endif
             .onSubmit(of: .search) { search() }
             .navigationTitle("Search - \(searchRegion.uppercased())")
             .toolbar { tools }
