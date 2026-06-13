@@ -32,8 +32,8 @@ struct MainView: View {
                     SidebarRow(section: section, downloads: downloads.runningTaskCount)
                         .tag(section)
                 }
-                .frame(minWidth: 220)
                 .listStyle(.sidebar)
+                .navigationSplitViewColumnWidth(min: 150, ideal: 150, max: 200)
             } detail: {
                 Group {
                     if let selection {
@@ -42,7 +42,8 @@ struct MainView: View {
                         detailView(for: .home)
                     }
                 }
-                .frame(minWidth: 400, minHeight: 250)
+                .frame(minHeight: 250)
+                .navigationSplitViewColumnWidth(min: 480, ideal: 500)
             }
             // Expose the selection so menu commands (⌘F, ⌘,) can drive it.
             .focusedSceneValue(\.sidebarSelection, $selection)
