@@ -30,11 +30,11 @@ struct PackageDisplayView: View {
                             .padding(.leading, 10)
                     }
                     .buttonStyle(.borderless)
-                    .background(LinearGradient(
+                    .background(Rectangle().fill(LinearGradient(
                         gradient: Gradient(colors: [.clear, .white]),
                         startPoint: .init(x: 0, y: 0.5),
                         endPoint: .init(x: 0.2, y: 0.5),
-                    ).blendMode(.destinationOut))
+                    )).blendMode(.destinationOut))
                     .transition(.scale)
                 }
             }
