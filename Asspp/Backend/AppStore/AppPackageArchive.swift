@@ -64,7 +64,12 @@ class AppPackageArchive {
         self.region = region
         self.package = package
 
-        let packageIdentifier = [package.id, package.software.bundleID.lowercased(), region]
+        let packageIdentifier = [
+            package.id,
+            package.software.bundleID.lowercased(),
+            region,
+            package.entityType?.rawValue ?? "unknown",
+        ]
             .joined()
             .lowercased()
         _versionItems = Persist(key: "\(packageIdentifier).versions", defaultValue: [:])
@@ -98,7 +103,11 @@ class AppPackageArchive {
         Task {
             do {
                 let versions = try await AppStore.this.withAccount(id: accountIdentifier) { userAccount in
-                    try await VersionFinder.list(account: &userAccount.account, bundleIdentifier: bundleID)
+                    try await VersionFinder.list(
+                        account: &userAccount.account,
+                        bundleIdentifier: bundleID,
+                        entityType: self.package.entityType
+                    )
                 }
                 self.versionIdentifiers = versions.reversed()
             } catch {

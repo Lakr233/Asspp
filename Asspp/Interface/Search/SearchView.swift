@@ -201,13 +201,14 @@ struct SearchView: View {
                 if let app = try? await ApplePackage.Lookup.lookup(
                     bundleID: searchKey,
                     countryCode: searchRegion,
+                    entityType: searchType,
                 ) {
                     result.insert(app, at: 0)
                 }
                 logger.info("search completed: \(result.count) results for term=\(searchKey)")
                 await MainActor.run {
                     searching = false
-                    searchResult = result.map { AppStore.AppPackage(software: $0) }
+                    searchResult = result.map { AppStore.AppPackage(software: $0, entityType: searchType) }
                     searchError = nil
                 }
             } catch {
