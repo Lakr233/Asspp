@@ -76,3 +76,4 @@ ENABLE_RESOURCE_ACCESS_USB = NO
 ENABLE_PREVIEWS = YES
 SWIFT_EMIT_LOC_STRINGS = YES
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks
+LD_RUNPATH_SEARCH_PATHS[sdk=macosx*] = $(inherited) @executable_path/../Frameworks
