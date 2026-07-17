@@ -256,8 +256,14 @@ struct ProductView: View {
 
 extension AppStore.AppPackage {
     var displaySupportedDevicesIcon: String {
-        // TODO: assuming iPhone for now
-        "iphone"
+        switch entityType {
+        case .appleTV:
+            "appletv"
+        case .iPad:
+            "ipad"
+        case .iPhone, .none:
+            "iphone"
+        }
     }
 }
 

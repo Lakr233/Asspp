@@ -18,9 +18,11 @@ extension AppStore {
         var releaseDate: Date?
         var downloadOutput: ApplePackage.DownloadOutput?
         var externalVersionID: String?
+        var entityType: EntityType?
 
-        init(software: ApplePackage.Software) {
+        init(software: ApplePackage.Software, entityType: EntityType? = nil) {
             self.software = software
+            self.entityType = entityType
             releaseDate = ISO8601DateFormatter().date(from: software.releaseDate)
         }
 

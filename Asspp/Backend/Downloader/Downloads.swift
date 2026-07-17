@@ -68,7 +68,11 @@ class Downloads {
     }
 
     func downloadRequest(forArchive archive: AppStore.AppPackage) -> PackageManifest? {
-        manifests.first { $0.package.id == archive.id && $0.package.externalVersionID == archive.externalVersionID }
+        manifests.first {
+            $0.package.id == archive.id
+                && $0.package.externalVersionID == archive.externalVersionID
+                && $0.package.entityType == archive.entityType
+        }
     }
 
     func add(request: PackageManifest) -> PackageManifest {
