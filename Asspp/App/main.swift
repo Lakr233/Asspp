@@ -20,7 +20,7 @@ let logger = {
     return logger
 }()
 
-APLogger.verbose = true
+APLogger.verbose = false
 APLogger.logger = Logger(label: "wiki.qaq.asspp.applepackage")
 
 let version = [

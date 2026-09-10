@@ -1,0 +1,17 @@
+name: SAP protocol checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  sap:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install CMake
+        run: command -v cmake >/dev/null || brew install cmake
+      - name: Check protocol, localization, build inputs and native runtime
+        run: bash Resources/Scripts/check.sap.sh

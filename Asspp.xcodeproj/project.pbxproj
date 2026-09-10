@@ -110,6 +110,7 @@
 			buildConfigurationList = 50D44D102C3F91F800CF6A69 /* Build configuration list for PBXNativeTarget "Asspp" */;
 			buildPhases = (
 				C0NF1G001000000000000006 /* Check Developer.xcconfig */,
+				5A9000000000000000000001 /* Prepare SAP */,
 				50D44CFE2C3F91F700CF6A69 /* Sources */,
 				50D44CFF2C3F91F700CF6A69 /* Frameworks */,
 				50D44D002C3F91F700CF6A69 /* Resources */,
@@ -203,6 +204,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5A9000000000000000000001 /* Prepare SAP */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare SAP";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/SAP/lib/libunicorn.a",
+				"$(DERIVED_FILE_DIR)/SAP/source/include/unicorn/unicorn.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/python3 \"${SRCROOT}/Resources/Scripts/prepare.sap.py\"\n";
+		};
 		C0NF1G001000000000000006 /* Check Developer.xcconfig */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;

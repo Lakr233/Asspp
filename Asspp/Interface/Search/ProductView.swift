@@ -108,8 +108,9 @@ struct ProductView: View {
     /// account. Sets `licenseHint` to a success message; callers handle errors.
     private func acquireLicense() async throws {
         guard let account else { return }
+        // Reuse SAP authentication, then reload the freshly persisted account.
+        try await vm.rotate(id: account.id)
         try await vm.withAccount(id: account.id) { userAccount in
-            try await ApplePackage.Authenticator.rotatePasswordToken(for: &userAccount.account)
             try await ApplePackage.Purchase.purchase(
                 account: &userAccount.account,
                 app: archive.package.software,

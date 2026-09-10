@@ -77,3 +77,9 @@ ENABLE_PREVIEWS = YES
 SWIFT_EMIT_LOC_STRINGS = YES
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks
 LD_RUNPATH_SEARCH_PATHS[sdk=macosx*] = $(inherited) @executable_path/../Frameworks
+
+// SAP uses an interpreter: no JIT or private entitlements are required.
+SWIFT_OBJC_BRIDGING_HEADER = $(SRCROOT)/Asspp/Asspp-Bridging-Header.h
+HEADER_SEARCH_PATHS = $(inherited) "$(DERIVED_FILE_DIR)/SAP/source/include"
+LIBRARY_SEARCH_PATHS = $(inherited) "$(DERIVED_FILE_DIR)/SAP/lib"
+OTHER_LDFLAGS = $(inherited) -lunicorn
