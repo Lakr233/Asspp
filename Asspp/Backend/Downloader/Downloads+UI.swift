@@ -61,11 +61,7 @@ extension Downloads {
 extension Downloads {
     func startDownload(for package: AppStore.AppPackage, accountID: String) async throws {
         try await AppStore.this.withAccount(id: accountID) { account in
-            let downloadOutput = try await ApplePackage.Download.download(
-                account: &account.account,
-                app: package.software,
-                externalVersionID: package.externalVersionID,
-            )
+            let downloadOutput = try await StoreDownloadService.download(account: &account.account, package: package)
             let request = try Downloads.this.add(request: .init(
                 account: account,
                 package: package,

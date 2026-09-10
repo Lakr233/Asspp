@@ -168,6 +168,8 @@ class Downloads {
     }
 
     private func finalize(manifest: PackageManifest, preparedContentAt downloadedFile: URL) async throws {
+        // Verify the main bundle identity and platform before signature injection.
+        try StorePackageValidator.validate(at: downloadedFile, package: manifest.package)
         try? FileManager.default.createDirectory(
             at: manifest.targetLocation.deletingLastPathComponent(),
             withIntermediateDirectories: true,
