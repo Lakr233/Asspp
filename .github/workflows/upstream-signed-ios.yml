@@ -208,6 +208,11 @@ jobs:
           done
           xcodebuild -version
 
+      - name: Prepare native build tools
+        run: |
+          command -v cmake >/dev/null || brew install cmake
+          command -v xcbeautify >/dev/null || brew install xcbeautify
+
       - name: Install signing assets
         id: signing
         env:

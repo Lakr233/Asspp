@@ -20,6 +20,14 @@ extension AppStore {
             self.account = account
         }
 
+        mutating func normalizeStoreCookies() {
+            account.cookie = account.cookie.map {
+                var cookie = $0
+                cookie.domain = StoreProtocol.storeCookieDomain(cookie.domain)
+                return cookie
+            }
+        }
+
         static func == (lhs: UserAccount, rhs: UserAccount) -> Bool {
             lhs.id == rhs.id
         }

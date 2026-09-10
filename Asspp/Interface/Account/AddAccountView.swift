@@ -63,30 +63,29 @@ struct AddAccountView: View {
             }
             if codeRequired {
                 Section {
-                    TextField("2FA Code (Optional)", text: $code)
+                    TextField("Verification Code", text: $code)
                     #if os(iOS)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .keyboardType(.numberPad)
+                        .textContentType(.oneTimeCode)
                     #endif
                 } header: {
                     Text("2FA Code")
                 } footer: {
-                    Text("Although the 2FA code is marked as optional, it's because we don't know if you have it enabled or just entered an incorrect password. Provide it if you have 2FA enabled.\n\nhttps://support.apple.com/102606")
+                    Text("Enter the six-digit verification code from your trusted Apple device.")
                 }
                 .transition(.opacity)
             }
             Section {
                 AsyncButton {
-                    logger.info("starting authentication for user")
+                    self.error = nil
                     do {
                         _ = try await vm.authenticate(email: email, password: password, code: code.isEmpty ? "" : code)
-                        logger.info("authentication successful for user")
                         dismiss()
                     } catch {
-                        logger.error("authentication failed: \(error.localizedDescription)")
                         self.error = error
-                        codeRequired = true
+                        codeRequired = codeRequired || (error as? StoreAuthenticationError)?.needsCode == true
                         throw error
                     }
                 } label: {

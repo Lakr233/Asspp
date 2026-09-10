@@ -93,3 +93,10 @@ Once the workflow finishes:
 - **"Unable to Verify App"**: Go to iOS Settings -> General -> VPN & Device Management and trust your certificate.
 - **Installation waits forever**: Ensure your device's UDID is included in the Provisioning Profile you uploaded.
 - **Build fails**: Check the Actions logs. Common errors include mismatched Bundle IDs or expired certificates.
+
+## SAP build prerequisites
+
+SAP authentication requires CMake on the build runner. The workflows install it
+when missing. Apple account passwords and verification codes are never needed
+at build time. See [SAP_AUTHENTICATION.md](SAP_AUTHENTICATION.md) for build inputs,
+protocol checks and third-party licensing.

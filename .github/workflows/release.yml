@@ -51,6 +51,11 @@ jobs:
       - name: Ensure iOS platform is installed
         run: xcodebuild -downloadPlatform iOS || true
 
+      - name: Prepare native build tools
+        run: |
+          command -v cmake >/dev/null || brew install cmake
+          command -v xcbeautify >/dev/null || brew install xcbeautify
+
       - name: Install Procursus
         uses: dhinakg/procursus-action@main
         with:
