@@ -16,7 +16,6 @@ struct SettingView: View {
     @Environment(\.openURL) private var openURL
     @State private var vm = AppStore.this
 
-    @State private var deviceIdTapCount = 0
     @State private var showDeviceIdWarning = false
     @State private var editingDeviceId = false
     @State private var deviceIdDraft = ""
@@ -28,11 +27,14 @@ struct SettingView: View {
         }
     }
 
+    private var normalizedDeviceID: String? {
+        AppStore.normalizedDeviceIdentifier(deviceIdDraft)
+    }
+
     private func saveDeviceID() {
-        let trimmed = deviceIdDraft.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return }
+        guard let identifier = normalizedDeviceID else { return }
         // The AppStore setter also propagates this to ApplePackage.Configuration.
-        vm.deviceIdentifier = trimmed
+        vm.deviceIdentifier = identifier
         editingDeviceId = false
     }
 
@@ -56,28 +58,48 @@ struct SettingView: View {
                     TextField("Device GUID", text: $deviceIdDraft)
                         .font(.system(.body, design: .monospaced))
                         .autocorrectionDisabled()
+                        .onSubmit(saveDeviceID)
                     #if canImport(UIKit)
                         .textInputAutocapitalization(.never)
                     #endif
+                    if normalizedDeviceID == nil {
+                        Text("Enter a valid 12-character hexadecimal device GUID.")
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                    }
                     #if os(macOS)
                         HStack {
                             Button("Save") { saveDeviceID() }
-                            Button("Cancel", role: .destructive) {
+                                .disabled(normalizedDeviceID == nil)
+                            Button("Cancel", role: .cancel) {
                                 editingDeviceId = false
+                            }
+                            Button("Generate Device GUID") {
+                                deviceIdDraft = DeviceIdentifier.random()
                             }
                             Spacer()
                         }
                     #else
                         Button("Save") { saveDeviceID() }
-                        Button("Cancel", role: .destructive) {
+                            .disabled(normalizedDeviceID == nil)
+                        Button("Cancel", role: .cancel) {
                             editingDeviceId = false
+                        }
+                        Button("Generate Device GUID") {
+                            deviceIdDraft = DeviceIdentifier.random()
                         }
                     #endif
                 } else {
-                    Text(vm.deviceIdentifier)
-                        .font(.system(.body, design: .monospaced))
-                        .textSelection(.enabled)
-                        .redacted(reason: .placeholder, isEnabled: vm.demoMode)
+                    HStack {
+                        Text(vm.deviceIdentifier)
+                            .font(.system(.body, design: .monospaced))
+                            .textSelection(.enabled)
+                            .redacted(reason: .placeholder, isEnabled: vm.demoMode)
+                        Spacer()
+                        Button("Edit Device GUID") {
+                            showDeviceIdWarning = true
+                        }
+                    }
                     #if os(macOS)
                         HStack {
                             Button("Open Settings") {
@@ -99,13 +121,6 @@ struct SettingView: View {
                 }
             } header: {
                 Text("Device")
-                    .onTapGesture {
-                        deviceIdTapCount += 1
-                        if deviceIdTapCount >= 10 {
-                            deviceIdTapCount = 0
-                            showDeviceIdWarning = true
-                        }
-                    }
             } footer: {
                 #if canImport(UIKit)
                     Text("Grant local network permission to install apps. Install and trust the SSL certificate for on-device installation.")
@@ -121,15 +136,6 @@ struct SettingView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("Changing the device GUID may cause all existing accounts to stop working. Apple limits the number of devices you can sign in with at once.")
-            }
-
-            Section {
-                Link("@Lakr233", destination: URL(string: "https://twitter.com/Lakr233")!)
-                Link("Buy me a coffee! ☕️", destination: URL(string: "https://github.com/sponsors/Lakr233/")!)
-            } header: {
-                Text("About")
-            } footer: {
-                Text("Hope this app helps you!")
             }
 
             Section {

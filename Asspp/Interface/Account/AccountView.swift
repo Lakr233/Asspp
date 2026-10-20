@@ -43,7 +43,7 @@ struct AccountView: View {
                         accountsTable
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .navigationDestination(for: AppStore.UserAccount.ID.self) { id in
                     AccountDetailView(accountId: id)
                 }
