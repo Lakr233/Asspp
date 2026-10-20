@@ -64,16 +64,17 @@ struct AccountView: View {
                         .redacted(reason: .placeholder, isEnabled: vm.demoMode)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .width(min: 240, ideal: 400, max: .infinity)
 
                 TableColumn("Region") { account in
                     Text(account.account.store)
                 }
-                .width(min: 40, ideal: 60, max: 80)
+                .width(min: 72, ideal: 88, max: 100)
 
                 TableColumn("Storefront") { account in
                     Text(ApplePackage.Configuration.countryCode(for: account.account.store) ?? String(localized: "Unknown"))
                 }
-                .width(min: 60, ideal: 80, max: 120)
+                .width(min: 56, ideal: 64, max: 80)
 
                 TableColumn("") { account in
                     Button {
