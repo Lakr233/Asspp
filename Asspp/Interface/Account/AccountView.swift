@@ -25,10 +25,30 @@ struct AccountView: View {
     #if os(macOS)
         private var macOSBody: some View {
             NavigationStack(path: $navigationPath) {
-                accountsTable
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .navigationTitle("Accounts")
-                    .toolbar { macToolbar }
+                Group {
+                    if vm.accounts.isEmpty {
+                        ContentUnavailableView(
+                            label: {
+                                Label("No Accounts", systemImage: "person.crop.circle.badge.questionmark")
+                            },
+                            description: {
+                                Text("Add an Apple ID to start downloading IPA packages.")
+                            },
+                            actions: {
+                                Button("Add Account") { addAccount.toggle() }
+                            },
+                        )
+                        .padding()
+                    } else {
+                        accountsTable
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .navigationDestination(for: AppStore.UserAccount.ID.self) { id in
+                    AccountDetailView(accountId: id)
+                }
+                .navigationTitle("Accounts")
+                .toolbar { macToolbar }
             }
             .sheet(isPresented: $addAccount) {
                 AddAccountView()
@@ -72,26 +92,7 @@ struct AccountView: View {
                     }
                 }
             }
-            .navigationDestination(for: AppStore.UserAccount.ID.self) { id in
-                AccountDetailView(accountId: id)
-            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .overlay {
-                if vm.accounts.isEmpty {
-                    ContentUnavailableView(
-                        label: {
-                            Label("No Accounts", systemImage: "person.crop.circle.badge.questionmark")
-                        },
-                        description: {
-                            Text("Add an Apple ID to start downloading IPA packages.")
-                        },
-                        actions: {
-                            Button("Add Account") { addAccount.toggle() }
-                        },
-                    )
-                    .padding()
-                }
-            }
         }
 
         private var footer: some View {
