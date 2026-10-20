@@ -81,7 +81,7 @@ enum StoreDownloadService {
                 logger.info("Store download [\(trace)]: catalog version=\(metadata.externalVersionID)")
                 return metadata.externalVersionID
             } onFallback: { reason in
-                logger.info("Store download [\(trace)]: trying redownload, reason=\(reason)")
+                logger.info("Store download [\(trace)]: trying \(reason == "empty-redownload-http500" ? "update" : "redownload"), reason=\(reason)")
             }
             // Preserve the existing UI's explicit free-license acquisition flow.
             if StoreDownloadProtocol.failureCode(response) == "9610" {
@@ -125,12 +125,19 @@ enum StoreDownloadService {
         components.scheme = "https"
         components.host = endpoint == .volumeStore ? Configuration.storeAPIHost(pod: account.pod) : "downloaddispatch.itunes.apple.com"
         components.path = endpoint.path
+        if endpoint == .update {
+            let bag = try? await Bag.fetchBag()
+            guard let update = bag?.updateEndpoint,
+                  let advertised = URLComponents(url: update, resolvingAgainstBaseURL: false)
+            else { throw StoreDownloadError.emptyResponse(500) }
+            components = advertised
+        }
         components.queryItems = [URLQueryItem(name: "guid", value: Configuration.deviceIdentifier)]
         guard var url = components.url else { throw StoreDownloadError.invalidRedirect }
         let body = try PropertyListSerialization.data(
             fromPropertyList: StoreDownloadProtocol.payload(endpoint: endpoint, appID: appID,
                                                             guid: Configuration.deviceIdentifier, version: version),
-            format: .xml, options: 0
+            format: .xml, options: 0,
         )
         for redirect in 0 ... 3 {
             try Task.checkCancellation()
@@ -162,7 +169,12 @@ enum StoreDownloadService {
             if let plist {
                 logger.info("Store download [\(trace)]: \(StoreDownloadProtocol.summary(plist))")
             }
-            guard response.statusCode == 200, let plist else { throw StoreDownloadError.response(response.statusCode) }
+            guard response.statusCode == 200, let plist else {
+                if data.isEmpty {
+                    throw StoreDownloadError.emptyResponse(response.statusCode)
+                }
+                throw StoreDownloadError.response(response.statusCode)
+            }
             return plist
         }
         throw StoreDownloadError.invalidRedirect

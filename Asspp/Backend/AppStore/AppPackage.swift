@@ -18,7 +18,7 @@ extension AppStore {
         var releaseDate: Date?
         var downloadOutput: ApplePackage.DownloadOutput?
         var externalVersionID: String?
-        // Optional so archives created before platform-aware downloads still decode.
+        /// Optional so archives created before platform-aware downloads still decode.
         var entityType: ApplePackage.EntityType?
 
         init(software: ApplePackage.Software, entityType: ApplePackage.EntityType? = nil) {

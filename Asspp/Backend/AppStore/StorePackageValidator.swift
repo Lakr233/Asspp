@@ -18,7 +18,7 @@ enum StorePackageValidator {
         }
         try StoreDownloadProtocol.validatePackageInfo(
             info, bundleID: package.software.bundleID,
-            platform: package.entityType == .appleTV ? "AppleTVOS" : "iPhoneOS"
+            platform: package.entityType == .appleTV ? "AppleTVOS" : "iPhoneOS",
         )
     }
 }

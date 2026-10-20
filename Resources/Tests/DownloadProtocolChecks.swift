@@ -27,6 +27,40 @@ struct DownloadProtocolChecks {
             onFallback: { precondition($0 == "failure-5002") }
         precondition(requests.count == 2 && requests.allSatisfy { $0.1 == "12345" })
 
+        // An empty HTTP 500 from redownload gets one update request with the same version.
+        requests = []
+        _ = try await StoreDownloadProtocol.fetchWithFallback(version: "12345") { endpoint, version in
+            requests.append((endpoint, version))
+            switch endpoint {
+            case .volumeStore: return empty
+            case .redownload: throw StoreDownloadError.emptyResponse(500)
+            case .update: return success
+            }
+        } resolveVersion: { fatalError("Replaced the requested historical version") } onFallback: { _ in }
+        precondition(requests.map(\.0) == [.volumeStore, .redownload, .update])
+        precondition(requests.allSatisfy { $0.1 == "12345" })
+
+        // Other failures do not qualify, and a failed update never loops.
+        for failure in [StoreDownloadError.response(500), .emptyResponse(503), .emptyResponse(500)] {
+            requests = []
+            do {
+                _ = try await StoreDownloadProtocol.fetchWithFallback(version: "12345") { endpoint, version in
+                    requests.append((endpoint, version))
+                    if endpoint == .volumeStore {
+                        return empty
+                    }
+                    throw failure
+                } resolveVersion: { fatalError("Unexpected lookup") } onFallback: { _ in }
+                fatalError("Ignored a failed download response")
+            } catch {
+                if case StoreDownloadError.emptyResponse(500) = failure {
+                    precondition(requests.count == 3 && requests.last?.0 == .update)
+                } else {
+                    precondition(requests.count == 2)
+                }
+            }
+        }
+
         // A catalog failure never issues an unpinned fallback request.
         requests = []
         do {
@@ -74,7 +108,7 @@ struct DownloadProtocolChecks {
             fatalError("Lost numeric failure code")
         } catch StoreDownloadError.rejected("9610", "License required") {}
 
-        for endpoint in [StoreDownloadProtocol.Endpoint.volumeStore, .redownload] {
+        for endpoint in [StoreDownloadProtocol.Endpoint.volumeStore, .redownload, .update] {
             let data = try PropertyListSerialization.data(fromPropertyList: StoreDownloadProtocol.payload(endpoint: endpoint, appID: 123,
                                                                                                           guid: "synthetic", version: "456"), format: .xml, options: 0)
             let payload = StoreProtocol.plist(data)!
@@ -85,6 +119,7 @@ struct DownloadProtocolChecks {
 
         let primary = "https://p25-buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/volumeStoreDownloadProduct"
         for url in [primary, "https://downloaddispatch.itunes.apple.com/r/redownload?guid=fixture",
+                    "https://downloaddispatch.itunes.apple.com/up/updateProduct?guid=fixture",
                     "https://p71-buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/redownloadProduct"]
         {
             _ = try StoreDownloadProtocol.validatedURL(URL(string: url)!)

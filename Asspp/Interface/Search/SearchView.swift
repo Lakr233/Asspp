@@ -18,7 +18,9 @@ import SwiftUI
 final class SearchFieldFocus {
     static let shared = SearchFieldFocus()
     var pending = false
-    func requestFocus() { pending = true }
+    func requestFocus() {
+        pending = true
+    }
 }
 
 struct SearchView: View {
@@ -98,9 +100,8 @@ struct SearchView: View {
             } else {
                 buildPickView(
                     for: regionKeys,
-                ) {
-                }
-                .pickerStyle(.inline)
+                ) {}
+                    .pickerStyle(.inline)
             }
         } label: {
             Label(searchRegion, systemImage: "globe")
@@ -160,7 +161,9 @@ struct SearchView: View {
         .animation(.spring, value: searchResult)
         .onAppear { consumePendingFocus() }
         .onChange(of: searchFocus.pending) { _, isPending in
-            if isPending { consumePendingFocus() }
+            if isPending {
+                consumePendingFocus()
+            }
         }
     }
 
@@ -233,9 +236,9 @@ extension SearchView {
     var legacyContent: some View {
         content
             .searchable(text: $searchKey, prompt: "Keyword") {}
-            #if os(macOS)
-                .searchFocused($searchKeyFocused)
-            #endif
+        #if os(macOS)
+            .searchFocused($searchKeyFocused)
+        #endif
             .onSubmit(of: .search) { search() }
             .navigationTitle("Search - \(searchRegion.uppercased())")
             .toolbar { tools }

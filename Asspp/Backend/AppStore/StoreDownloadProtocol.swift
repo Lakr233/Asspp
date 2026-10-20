@@ -3,6 +3,7 @@ import Foundation
 enum StoreDownloadError: LocalizedError {
     case invalidRedirect
     case response(Int)
+    case emptyResponse(Int)
     case invalidPackage
     case empty
     case catalogUnavailable
@@ -14,7 +15,7 @@ enum StoreDownloadError: LocalizedError {
         switch self {
         case .invalidRedirect:
             String(localized: "Apple returned an invalid download redirect.")
-        case let .response(status):
+        case let .response(status), let .emptyResponse(status):
             String(localized: "Apple's download service returned an invalid response (HTTP \(status)).")
         case .invalidPackage:
             String(localized: "Apple returned incomplete or mismatched package information.")
@@ -74,14 +75,18 @@ enum StoreDownloadProtocol {
     }
 
     enum Endpoint: String {
-        case volumeStore, redownload
+        case volumeStore, redownload, update
 
         var versionKey: String {
             self == .volumeStore ? "externalVersionId" : "appExtVrsId"
         }
 
         var path: String {
-            self == .volumeStore ? "/WebObjects/MZFinance.woa/wa/volumeStoreDownloadProduct" : "/r/redownload"
+            switch self {
+            case .volumeStore: "/WebObjects/MZFinance.woa/wa/volumeStoreDownloadProduct"
+            case .redownload: "/r/redownload"
+            case .update: "/up/updateProduct"
+            }
         }
     }
 
@@ -92,7 +97,8 @@ enum StoreDownloadProtocol {
         let storePath = [Endpoint.volumeStore.path, "/WebObjects/MZFinance.woa/wa/redownloadProduct"].contains(url.path)
         guard url.scheme == "https", url.user == nil, url.password == nil,
               url.fragment == nil, url.port == nil || url.port == 443,
-              (storeHost && storePath) || (host == "downloaddispatch.itunes.apple.com" && url.path == Endpoint.redownload.path)
+              (storeHost && storePath) || (host == "downloaddispatch.itunes.apple.com"
+                  && [Endpoint.redownload.path, Endpoint.update.path].contains(url.path))
         else { throw StoreDownloadError.invalidRedirect }
         return url
     }
@@ -132,25 +138,29 @@ enum StoreDownloadProtocol {
         return response["songList"] == nil ? "missing-songList" : nil
     }
 
-    /// At most one fallback. A failed catalog lookup must not turn into an
+    /// Each endpoint is attempted at most once. A failed catalog lookup must not turn into an
     /// unpinned redownload, and historical requests must keep their version ID.
     static func fetchWithFallback(
         version: String?,
         fetch: (Endpoint, String?) async throws -> [String: Any],
         resolveVersion: () async throws -> String,
-        onFallback: (String) -> Void
+        onFallback: (String) -> Void,
     ) async throws -> [String: Any] {
         let primary = try await fetch(.volumeStore, version)
         guard let reason = fallbackReason(primary) else { return primary }
         onFallback(reason)
-        let resolved: String
-        if let version, !version.isEmpty {
-            resolved = version
+        let resolved: String = if let version, !version.isEmpty {
+            version
         } else {
-            resolved = try await resolveVersion()
+            try await resolveVersion()
         }
         guard !resolved.isEmpty else { throw StoreDownloadError.catalogUnavailable }
-        return try await fetch(.redownload, resolved)
+        do {
+            return try await fetch(.redownload, resolved)
+        } catch StoreDownloadError.emptyResponse(500) {
+            onFallback("empty-redownload-http500")
+            return try await fetch(.update, resolved)
+        }
     }
 
     /// Only structural fields and numeric codes are logged. Apple messages can
@@ -163,11 +173,10 @@ enum StoreDownloadProtocol {
             }
             return text.count <= 12 && text.allSatisfy { $0.isASCII && ($0.isNumber || $0 == "-") } ? text : "other"
         }
-        let items: String
-        if let list = response["songList"] as? [Any] {
-            items = String(list.count)
+        let items: String = if let list = response["songList"] as? [Any] {
+            String(list.count)
         } else {
-            items = response["songList"] == nil ? "missing" : "invalid"
+            response["songList"] == nil ? "missing" : "invalid"
         }
         let message = !StoreProtocol.string(response["customerMessage"]).isEmpty
         return "songList=\(items) failure=\(numeric(failureCode(response))) status=\(numeric(response["status"])) customerMessage=\(message) dialog=\(response["dialog"] != nil) action=\(response["action"] != nil)"

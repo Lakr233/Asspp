@@ -100,8 +100,8 @@ class PackageManifest: Identifiable, Codable, Hashable, Equatable {
         case id, account, package, url, signatures, iTunesMetadata, creation, runtime
     }
 
-    // Identity is the immutable UUID; hashing mutable fields like `state` would
-    // change a manifest's hash mid-download and break Set/Dictionary lookups.
+    /// Identity is the immutable UUID; hashing mutable fields like `state` would
+    /// change a manifest's hash mid-download and break Set/Dictionary lookups.
     static func == (lhs: PackageManifest, rhs: PackageManifest) -> Bool {
         lhs.id == rhs.id
     }

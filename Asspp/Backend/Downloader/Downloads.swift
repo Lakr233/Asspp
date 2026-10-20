@@ -21,9 +21,9 @@ class Downloads {
     @ObservationIgnored
     private var lastProgressUpdates: [UUID: CFAbsoluteTime] = [:]
 
-    // Manifest IDs whose Digger callbacks are already attached, so a
-    // pause/resume cycle does not register a second completion handler (which
-    // would run finalize() twice and destroy the downloaded bytes).
+    /// Manifest IDs whose Digger callbacks are already attached, so a
+    /// pause/resume cycle does not register a second completion handler (which
+    /// would run finalize() twice and destroy the downloaded bytes).
     @ObservationIgnored
     private var registeredCallbacks: Set<UUID> = []
 
@@ -46,10 +46,10 @@ class Downloads {
         }
     }
 
-    // Stored, not computed: a computed property would read each manifest's
-    // `state`, so every download progress tick would invalidate the badge,
-    // sidebar, and AppDelegate observers and re-render the whole TabView.
-    // Refresh it only when a status actually transitions.
+    /// Stored, not computed: a computed property would read each manifest's
+    /// `state`, so every download progress tick would invalidate the badge,
+    /// sidebar, and AppDelegate observers and re-render the whole TabView.
+    /// Refresh it only when a status actually transitions.
     private(set) var runningTaskCount: Int = 0
 
     private func refreshRunningTaskCount() {
@@ -108,7 +108,9 @@ class Downloads {
                     newState.status = .downloading
                     newState.speed = Self.speedFormatter.string(fromByteCount: Int64(speedBytes))
                     request.state = newState
-                    if !wasDownloading { self.refreshRunningTaskCount() }
+                    if !wasDownloading {
+                        self.refreshRunningTaskCount()
+                    }
                 }
             }
             .progress { progress in
@@ -125,7 +127,9 @@ class Downloads {
                     newState.status = .downloading
                     newState.percent = fraction
                     request.state = newState
-                    if !wasDownloading { self.refreshRunningTaskCount() }
+                    if !wasDownloading {
+                        self.refreshRunningTaskCount()
+                    }
                 }
             }
             .completion { completion in

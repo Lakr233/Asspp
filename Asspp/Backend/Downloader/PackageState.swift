@@ -22,7 +22,11 @@ struct PackageState: Codable, Hashable, Equatable {
     }
 
     var error: String? = nil {
-        didSet { if error != nil { status = .failed } }
+        didSet {
+            if error != nil {
+                status = .failed
+            }
+        }
     }
 
     var speed: String = ""

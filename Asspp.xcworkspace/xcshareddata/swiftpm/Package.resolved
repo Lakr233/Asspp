@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Lakr233/ApplePackage",
       "state" : {
-        "revision" : "b50effb9e6eca39be4d7d5e8431c91845314dfa1",
-        "version" : "2.0.2"
+        "revision" : "773583a29c6b1f1b0d0783d0a15d3ddafcd85eec",
+        "version" : "2.0.3"
       }
     },
     {

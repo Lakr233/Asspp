@@ -21,9 +21,9 @@ struct FileListView: View {
     @State var message = ""
     @State var searchText = ""
 
-    // Parent path + lowercased file name precomputed once per entry, so
-    // filtering on each keystroke is plain string comparison rather than three
-    // URL allocations per entry.
+    /// Parent path + lowercased file name precomputed once per entry, so
+    /// filtering on each keystroke is plain string comparison rather than three
+    /// URL allocations per entry.
     private struct IndexedEntry {
         let parent: String
         let name: String
@@ -35,7 +35,9 @@ struct FileListView: View {
     private func buildIndex(from entries: [Entry]) -> [IndexedEntry] {
         entries.map { entry in
             var path = entry.path
-            if !path.hasPrefix("/") { path = "/" + path }
+            if !path.hasPrefix("/") {
+                path = "/" + path
+            }
             let url = URL(fileURLWithPath: path)
             return IndexedEntry(
                 parent: url.deletingLastPathComponent().path,

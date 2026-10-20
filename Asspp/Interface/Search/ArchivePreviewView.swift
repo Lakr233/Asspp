@@ -14,7 +14,9 @@ struct ArchivePreviewView: View {
     var preferredIconSize: CGFloat?
     var lineLimit: Int? = 1
 
-    private var iconSize: CGFloat { preferredIconSize ?? 50 }
+    private var iconSize: CGFloat {
+        preferredIconSize ?? 50
+    }
 
     private var screenScale: CGFloat {
         #if canImport(UIKit)

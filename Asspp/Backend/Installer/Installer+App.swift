@@ -20,7 +20,9 @@ extension Installer {
 
         app.threadPool = .init(numberOfThreads: 1)
 
-        if secured { app.http.server.configuration.tlsConfiguration = try Self.setupTLS() }
+        if secured {
+            app.http.server.configuration.tlsConfiguration = try Self.setupTLS()
+        }
         app.http.server.configuration.hostname = Self.sni
         app.http.server.configuration.tcpNoDelay = true
 
