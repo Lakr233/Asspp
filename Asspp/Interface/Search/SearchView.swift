@@ -190,24 +190,26 @@ struct SearchView: View {
         searching = true
         searchError = nil
         logger.info("search: term=\(searchKey) region=\(searchRegion) type=\(searchType.rawValue)")
+        let entityType = searchType
         Task {
             do {
                 var result = try await ApplePackage.Searcher.search(
                     term: searchKey,
                     countryCode: searchRegion,
                     limit: 32,
-                    entityType: searchType,
+                    entityType: entityType,
                 )
                 if let app = try? await ApplePackage.Lookup.lookup(
                     bundleID: searchKey,
                     countryCode: searchRegion,
+                    entityType: entityType,
                 ) {
                     result.insert(app, at: 0)
                 }
                 logger.info("search completed: \(result.count) results for term=\(searchKey)")
                 await MainActor.run {
                     searching = false
-                    searchResult = result.map { AppStore.AppPackage(software: $0) }
+                    searchResult = result.map { AppStore.AppPackage(software: $0, entityType: entityType) }
                     searchError = nil
                 }
             } catch {

@@ -1,0 +1,15 @@
+name: Store download checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  downloads:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check fallback, response validation and localization
+        run: bash Resources/Scripts/check.downloads.sh
