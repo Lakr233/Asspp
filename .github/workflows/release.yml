@@ -69,6 +69,9 @@ jobs:
           chmod +x Resources/Scripts/compile.release.osx.sh
           ./Resources/Scripts/compile.release.osx.sh "$(pwd)" "${RUNNER_TEMP}/Asspp.zip"
 
+      - name: Check release privacy
+        run: python3 Resources/Scripts/check.release.privacy.py "${RUNNER_TEMP}/Asspp.ipa" "${RUNNER_TEMP}/Asspp.zip"
+
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}

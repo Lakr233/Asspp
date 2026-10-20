@@ -2,5 +2,5 @@
 // Single source of truth for version numbers
 // CI can modify this file to update version for all configurations
 
-MARKETING_VERSION = 4.2.0
+MARKETING_VERSION = 4.2.2
 CURRENT_PROJECT_VERSION = 0
