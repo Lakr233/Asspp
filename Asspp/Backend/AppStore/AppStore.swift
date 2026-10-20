@@ -98,12 +98,25 @@ class AppStore {
     }
 
     @discardableResult
-    func save(email: String, account: ApplePackage.Account) -> UserAccount {
+    func save(email: String, account: ApplePackage.Account) throws -> UserAccount {
         logger.info("saving account for user")
         let account = UserAccount(account: account)
-        accounts = (accounts.filter { $0.account.email != email } + [account])
+        let updatedAccounts = (accounts.filter { $0.account.email != email } + [account])
             .sorted { $0.account.email < $1.account.email }
+        do {
+            try withMutation(keyPath: \.accounts) {
+                try _accounts.setAndSave(updatedAccounts)
+            }
+        } catch {
+            throw AccountStorageError()
+        }
         return account
+    }
+
+    private struct AccountStorageError: LocalizedError {
+        var errorDescription: String? {
+            String(localized: "Unable to save the account to Keychain. Check the app's code signing and Keychain access, then try again.")
+        }
     }
 
     func delete(id: UserAccount.ID) {

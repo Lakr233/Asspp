@@ -3044,6 +3044,23 @@
           }
         }
       }
+    },
+    "Unable to save the account to Keychain. Check the app's code signing and Keychain access, then try again." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to save the account to Keychain. Check the app's code signing and Keychain access, then try again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法将账户保存到钥匙串。请检查应用签名和钥匙串访问权限，然后重试。"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

@@ -10,8 +10,8 @@ import Foundation
 import KeychainAccess
 
 protocol PersistProvider {
-    func data(forKey: String) -> Data?
-    func set(_ data: Data?, forKey: String)
+    func data(forKey: String) throws -> Data?
+    func set(_ data: Data?, forKey: String) throws
 }
 
 private let valueEncoder = JSONEncoder()
@@ -51,15 +51,15 @@ class KeychainStorage: PersistProvider {
         keychain = Keychain(service: service).synchronizable(true)
     }
 
-    func data(forKey key: String) -> Data? {
-        try? keychain.getData(key)
+    func data(forKey key: String) throws -> Data? {
+        try keychain.getData(key)
     }
 
-    func set(_ data: Data?, forKey key: String) {
+    func set(_ data: Data?, forKey key: String) throws {
         if let data {
-            try? keychain.set(data, key: key)
+            try keychain.set(data, key: key)
         } else {
-            try? keychain.remove(key)
+            try keychain.remove(key)
         }
     }
 }
@@ -69,6 +69,9 @@ struct Persist<Value: Codable> {
     private let subject: CurrentValueSubject<Value, Never>
     private let cancellables: Set<AnyCancellable>
     private let engine: PersistProvider
+    private let key: String
+    private let loadError: Error?
+    private let persistQueue: DispatchQueue
 
     var projectedValue: AnyPublisher<Value, Never> {
         subject.eraseToAnyPublisher()
@@ -76,31 +79,51 @@ struct Persist<Value: Codable> {
 
     init(key: String, defaultValue: Value, engine: PersistProvider) {
         self.engine = engine
-        if let data = engine.data(forKey: key) {
-            if let object = try? valueDecoder.decode(Value.self, from: data) {
-                subject = CurrentValueSubject<Value, Never>(object)
-            } else {
-                // Stored data exists but no longer decodes (shape change, partial
-                // write). Back it up before the default value overwrites the
-                // store so accounts/downloads stay recoverable instead of lost.
-                engine.set(data, forKey: key + ".corrupt")
-                logger.error("failed to decode persisted value for \(key); backed up to \(key).corrupt")
-                subject = CurrentValueSubject<Value, Never>(defaultValue)
+        self.key = key
+        var initialValue = defaultValue
+        var loadError: Error?
+        do {
+            if let data = try engine.data(forKey: key) {
+                do {
+                    initialValue = try valueDecoder.decode(Value.self, from: data)
+                } catch {
+                    try engine.set(data, forKey: key + ".corrupt")
+                    logger.error("failed to decode persisted value for \(key); backed up to \(key).corrupt")
+                }
             }
-        } else {
-            subject = CurrentValueSubject<Value, Never>(defaultValue)
+        } catch {
+            loadError = error
+            logger.error("failed to load persisted value for \(key); stored data was preserved")
         }
+        self.loadError = loadError
+        subject = CurrentValueSubject<Value, Never>(initialValue)
 
         // Encode on the mutating thread so reference-type values cannot be
         // mutated mid-encode, then serialize the writes so rapid updates land
         // in order.
         let persistQueue = DispatchQueue(label: "wiki.qaq.persist.\(key)")
+        self.persistQueue = persistQueue
         var cancellables: Set<AnyCancellable> = .init()
         subject
-            .map { try? valueEncoder.encode($0) }
+            .dropFirst()
+            .compactMap { value -> Data? in
+                do {
+                    return try valueEncoder.encode(value)
+                } catch {
+                    logger.error("failed to encode persisted value for \(key)")
+                    return nil
+                }
+            }
             .removeDuplicates()
             .receive(on: persistQueue)
-            .sink { engine.set($0, forKey: key) }
+            .sink { data in
+                guard loadError == nil else { return }
+                do {
+                    try engine.set(data, forKey: key)
+                } catch {
+                    logger.error("failed to save persisted value for \(key)")
+                }
+            }
             .store(in: &cancellables)
         self.cancellables = cancellables
     }
@@ -112,6 +135,16 @@ struct Persist<Value: Codable> {
 
     func save() {
         subject.send(subject.value)
+    }
+
+    /// Account creation must reach persistent storage before reporting success.
+    func setAndSave(_ value: Value) throws {
+        if let loadError {
+            throw loadError
+        }
+        let data = try valueEncoder.encode(value)
+        try persistQueue.sync { try engine.set(data, forKey: key) }
+        subject.send(value)
     }
 }
 
