@@ -415,7 +415,7 @@
 			repositoryURL = "https://github.com/Lakr233/ApplePackage";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.7;
+				minimumVersion = 2.0.2;
 			};
 		};
 		50ABFE1D2F48AAE50077DE1A /* XCRemoteSwiftPackageReference "ButtonKit" */ = {

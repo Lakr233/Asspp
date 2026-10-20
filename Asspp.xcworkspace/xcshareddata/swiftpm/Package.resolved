@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Lakr233/ApplePackage",
       "state" : {
-        "revision" : "28710fec47fa89dfdedf2bf47cc284a2334ddfdc",
-        "version" : "1.2.7"
+        "revision" : "b50effb9e6eca39be4d7d5e8431c91845314dfa1",
+        "version" : "2.0.2"
       }
     },
     {
@@ -125,6 +125,15 @@
       "state" : {
         "revision" : "3498e60218e6003894ff95192d756e238c01f44e",
         "version" : "4.7.1"
+      }
+    },
+    {
+      "identity" : "openssl-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Lakr233/openssl-spm.git",
+      "state" : {
+        "revision" : "eac8fdd510ebbcd410982d209a4b1dc67eb063ce",
+        "version" : "4.0.1"
       }
     },
     {

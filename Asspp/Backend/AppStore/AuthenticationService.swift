@@ -15,14 +15,13 @@ extension AppStore {
     }
 
     @MainActor
-    func authenticate(email: String, password: String, code: String) async throws -> UserAccount {
+    func authenticate(email: String, password: String, code: String, using session: ApplePackage.Authenticator) async throws -> UserAccount {
         logger.info("starting authentication for user")
         do {
-            let appleAccount = try await ApplePackage.Authenticator.authenticate(
+            let appleAccount = try await session.authenticate(
                 email: email,
                 password: password,
                 code: code,
-                cookies: [],
             )
             let userAccount = save(email: email, account: appleAccount)
             logger.info("authentication successful for user")

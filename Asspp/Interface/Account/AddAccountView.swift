@@ -20,6 +20,8 @@ struct AddAccountView: View {
     @State private var codeRequired: Bool = false
     @State private var code: String = ""
 
+    @State private var authenticator: ApplePackage.Authenticator?
+    @State private var isAuthenticating = false
     @State private var error: Error?
 
     var body: some View {
@@ -78,15 +80,26 @@ struct AddAccountView: View {
             }
             Section {
                 AsyncButton {
+                    isAuthenticating = true
+                    defer { isAuthenticating = false }
                     logger.info("starting authentication for user")
                     do {
-                        _ = try await vm.authenticate(email: email, password: password, code: code.isEmpty ? "" : code)
+                        let session: ApplePackage.Authenticator
+                        if let authenticator {
+                            session = authenticator
+                        } else {
+                            session = try await ApplePackage.Authenticator()
+                            authenticator = session
+                        }
+                        _ = try await vm.authenticate(email: email, password: password, code: code, using: session)
                         logger.info("authentication successful for user")
                         dismiss()
                     } catch {
                         logger.error("authentication failed: \(error.localizedDescription)")
                         self.error = error
-                        codeRequired = true
+                        if case ApplePackage.AuthenticationError.verificationCodeRequired = error {
+                            codeRequired = true
+                        }
                         throw error
                     }
                 } label: {
@@ -105,12 +118,22 @@ struct AddAccountView: View {
                 }
             }
         }
+        .disabled(isAuthenticating)
         .formStyle(.grouped)
         .animation(.spring, value: codeRequired)
+        .onChange(of: email) { resetAuthentication() }
+        .onChange(of: password) { resetAuthentication() }
         #if os(iOS)
             .listStyle(.insetGrouped)
             .navigationBarTitleDisplayMode(.inline)
         #endif
             .navigationTitle("Add Account")
+    }
+
+    private func resetAuthentication() {
+        authenticator = nil
+        codeRequired = false
+        code = ""
+        error = nil
     }
 }
