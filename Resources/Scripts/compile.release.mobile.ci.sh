@@ -30,7 +30,8 @@ xcodebuild -workspace "$WORKSPACE" \
     -scheme "$SCHEME" \
     -configuration Release \
     -derivedDataPath "$SRCROOT/build/DerivedDataApp" \
-    -destination 'generic/platform=iOS' \
+    -destination "generic/platform=iOS" \
+    -xcconfig "$SRCROOT/Configuration/Version.xcconfig" \
     build \
     DEVELOPMENT_TEAM="" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" \
     GCC_GENERATE_DEBUGGING_SYMBOLS=YES STRIP_INSTALLED_PRODUCT=NO \
